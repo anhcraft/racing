@@ -19,6 +19,10 @@ config/icon="res://icon.png"
 
 Player="*res://Player.gd"
 
+[display]
+
+window/size/resizable=false
+
 [input]
 
 ui_left={
