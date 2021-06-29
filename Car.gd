@@ -4,7 +4,7 @@ signal moving;
 
 export var car_speed = 500
 export var car_boost_cooldown = 1
-export var car_boost_speed = 500
+export var car_boost_speed = 100
 
 var lastBoostTime = 0
 var wheelRotate = 0
