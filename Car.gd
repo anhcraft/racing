@@ -28,7 +28,7 @@ func _process(delta):
 			self.linear_velocity += velocity
 
 	if self.linear_velocity.length() >= 50:
-		wheelRotate += PI / 60
+		wheelRotate += self.linear_velocity.angle() / 60
 		$FrontWheel.rotate(wheelRotate)
 		$BackWheel.rotate(wheelRotate)
 
