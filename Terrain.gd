@@ -98,7 +98,7 @@ func set_origin(pos: int):
 
 func _process(delta):
 	var coins = get_tree().get_nodes_in_group("coins")
-	var edge = pos - get_viewport().size.x * 0.5
+	var edge = pos - get_viewport().size.x * 2
 	var i = 0
 	for coin in coins:
 		if coin is Area2D:
