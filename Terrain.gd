@@ -88,7 +88,7 @@ func _ready():
 	grassNoise.period = 1.0
 
 	terrain_outer_x = get_viewport().size.x
-	terrain_outer_y = get_viewport().size.y * 0.3
+	terrain_outer_y = get_viewport().size.y
 
 	current_terrain2_config = -1
 
