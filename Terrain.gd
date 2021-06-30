@@ -2,6 +2,8 @@ extends Node2D
 
 export var terrain_height_min = 10;
 export var terrain_height_max = 300;
+export var terrain2_height_min = 200;
+export var terrain2_height_max = 1000;
 export var terrain_poly_size = 100;
 
 export var grass_height_min = -10;
@@ -13,6 +15,7 @@ export var coin_spawn_chance = 0.5;
 const coinScene = preload("res://Coin.tscn")
 
 var terrainNoise: OpenSimplexNoise;
+var terrain2Noise: OpenSimplexNoise;
 var grassNoise: OpenSimplexNoise;
 var pos: int;
 var terrain_outer_x: int;
@@ -26,6 +29,12 @@ func _ready():
 	terrainNoise.octaves = 2
 	terrainNoise.period = 500.0
 	terrainNoise.persistence = 0.6
+
+	terrain2Noise = OpenSimplexNoise.new()
+	terrain2Noise.seed = randi()
+	terrain2Noise.octaves = 3
+	terrain2Noise.period = 700.0
+	terrain2Noise.persistence = 0.2
 
 	grassNoise = OpenSimplexNoise.new()
 	grassNoise.seed = randi()
@@ -61,8 +70,8 @@ func _draw():
 		n -= terrain_outer_x
 		var x = n + pos
 
-		var t = (terrainNoise.get_noise_1d(x) + 1) * 0.5
-		var d = terrain_height_min + t * (terrain_height_max - terrain_height_min)
+		var d = terrain_height_min + ((terrainNoise.get_noise_1d(x) + 1) * 0.5) * (terrain_height_max - terrain_height_min)
+		d += terrain2_height_min + ((terrain2Noise.get_noise_1d(x) + 1) * 0.5) * (terrain2_height_max - terrain2_height_min)
 
 		if x % terrain_poly_size == 0:
 			groundPoints.push_back(Vector2(x, h - d))
@@ -76,7 +85,7 @@ func _draw():
 					add_child(coin)
 
 		if x % grass_poly_size == 0:
-			grassBottomPoints.push_back(Vector2(x, h - d + 10))
+			grassBottomPoints.push_back(Vector2(x, h - d + 15))
 			var g = (grassNoise.get_noise_1d(x) + 1) * 0.5
 			d += grass_height_min + g * (grass_height_max - grass_height_min)
 			grassTopPoints.insert(0, Vector2(x, h - d))
