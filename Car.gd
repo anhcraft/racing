@@ -20,7 +20,7 @@ func _process(delta):
 	if !$"/root/Player".stopped:
 		if $RayCast2D.get_collider() != null:
 			emit_signal("overturn")
-			pass
+			return
 
 		if self.linear_velocity.length() < car_speed:
 			var speed = car_speed

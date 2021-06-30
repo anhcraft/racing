@@ -45,7 +45,7 @@ func _on_Car_overturn():
 
 func _process(delta):
 	if cameraVelocity == 0:
-		pass
+		return
 	var speed = camera_move_speed * delta * abs(cameraVelocity) * Engine.get_frames_per_second()
 	if cameraVelocity > 0:
 		$Camera.position.x += speed
