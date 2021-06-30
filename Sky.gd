@@ -16,13 +16,12 @@ func _ready():
 func handle_move(pos: int, delta: float):
 	var clouds = get_tree().get_nodes_in_group("clouds")
 
-	var edge = pos - 5 * get_viewport().size.x
+	var edge = pos - get_viewport().size.x
 	var i = 0
 	for cloud in clouds:
 		if cloud is Sprite:
-			var x = cloud.position.x
 			cloud.position.x -= wind_speed * delta * Engine.get_frames_per_second()
-			if cloud.position.x <= 0:
+			if cloud.position.x * self.scale.x <= edge:
 				cloud.queue_free()
 			else:
 				i += 1
@@ -36,7 +35,6 @@ func spawn(i: int, init: bool):
 		if randf() <= cloud_spawn_chance:
 			var node = Sprite.new()
 			add_child(node)
-			node.name = str(OS.get_time().second) + "#" + str(randi() % 10000)
 			node.texture = txt
 			node.scale.x = 1 / self.scale.x
 			node.scale.y = 1 / self.scale.y
