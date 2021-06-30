@@ -25,10 +25,8 @@ func _process(delta):
 			var speed = car_speed
 			var velocity = Vector2()
 
-			if Input.is_action_pressed("ui_right"):
+			if Input.is_action_pressed("ui_right") || Input.is_action_pressed("ui_up"):
 				velocity.x += 1
-			if Input.is_action_pressed("ui_left"):
-				velocity.x -= 1
 
 			if velocity.length() > 0:
 				if OS.get_time().second >= lastBoostTime + car_boost_cooldown:
