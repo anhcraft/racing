@@ -13,11 +13,14 @@ var stopped = false;
 func init():
 	update_balance(0)
 	update_energy(0)
+	stopped = true
 
 func deposit():
 	update_balance(balance + 1)
 
 func update_balance(value: int):
+	if stopped:
+		return
 	balance = value
 	emit_signal("updateBalance", balance)
 
@@ -25,5 +28,7 @@ func boost(delta: float):
 	update_energy(energy + delta * energy_ratio)
 
 func update_energy(value: float):
+	if stopped:
+		return
 	energy = clamp(value, 0, 100)
 	emit_signal("updateEnergy", energy)

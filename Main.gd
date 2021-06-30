@@ -61,6 +61,13 @@ func _on_Balance_updated(balance):
 func _on_Energy_updated(value):
 	$HUD/EnergyBar.value = value
 
+func _on_PlayBtn_button_down():
+	var ds = $MainScreen.get_children()
+	for dsc in ds:
+		if dsc is CanvasItem:
+			dsc.hide()
+	$"/root/Player".stopped = false
+
 func _on_ContinueBtn_button_down():
 	var ds = $DeathScreen.get_children()
 	for dsc in ds:
