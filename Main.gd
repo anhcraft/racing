@@ -22,11 +22,13 @@ func _ready():
 	$"/root/Player".position = $Car.position.x
 
 	$"/root/Player".connect("updateBalance", self, "_on_Balance_updated")
-	_on_Balance_updated($"/root/Player".balance)
+	$"/root/Player".connect("updateEnergy", self, "_on_Energy_updated")
+	$"/root/Player".init()
 
 func _on_Car_moving():
 	if abs($Car.position.x - $Camera.position.x) >= 0.05 * width:
 		cameraVelocity = $Car.position.x - $Camera.position.x
+		$"/root/Player".boost(abs($Car.position.x - $"/root/Player".position))
 		$"/root/Player".position = $Car.position.x
 		$Terrain.set_origin($"/root/Player".position)
 	if $Car.position.y > $Camera.position.y + 0.1 * height:
@@ -52,9 +54,12 @@ func _process(delta):
 		$Camera.position.x -= speed
 		cameraVelocity = min(cameraVelocity + speed, 0)
 	$Sky.handle_move($Camera.position.x, delta)
-
+	
 func _on_Balance_updated(balance):
 	$HUD/BalanceText.text = str(balance) + " "
+
+func _on_Energy_updated(value):
+	$HUD/EnergyBar.value = value
 
 func _on_ContinueBtn_button_down():
 	var ds = $DeathScreen.get_children()
