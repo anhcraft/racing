@@ -4,7 +4,8 @@ export var camera_move_speed = 0.05
 
 var width;
 var height;
-var cameraVelocity = 0;
+var cameraVelocityX = 0;
+var cameraVelocityY = 0;
 
 func _ready():
 	randomize()
@@ -18,7 +19,7 @@ func _ready():
 	height = get_viewport().size.y
 
 	$Car.position.x = width * 0.5
-	cameraVelocity = $Car.position.x
+	cameraVelocityX = $Car.position.x
 	$"/root/Player".position = $Car.position.x
 
 	$"/root/Player".connect("updateBalance", self, "_on_Balance_updated")
@@ -27,15 +28,13 @@ func _ready():
 
 func _on_Car_moving():
 	if abs($Car.position.x - $Camera.position.x) >= 0.05 * width:
-		cameraVelocity = $Car.position.x - $Camera.position.x
-		if cameraVelocity > 0:
+		cameraVelocityX = $Car.position.x - $Camera.position.x
+		if cameraVelocityX > 0:
 			$"/root/Player".boost(abs($Car.position.x - $"/root/Player".position))
 		$"/root/Player".position = $Car.position.x
 		$Terrain.set_origin($"/root/Player".position)
-	if $Car.position.y > $Camera.position.y + 0.1 * height:
-		$Camera.position.y += 5
-	if $Car.position.y < $Camera.position.y - 0.1 * height:
-		$Camera.position.y -= 5
+	if abs($Car.position.y - $Camera.position.y) >= 0.05 * height:
+		cameraVelocityY = $Car.position.y - $Camera.position.y
 
 func _on_Car_overturn():
 	$"/root/Player".stopped = true
@@ -45,15 +44,22 @@ func _on_Car_overturn():
 			dsc.show()
 
 func _process(delta):
-	if cameraVelocity == 0:
-		return
-	var speed = camera_move_speed * delta * abs(cameraVelocity) * Engine.get_frames_per_second()
-	if cameraVelocity > 0:
-		$Camera.position.x += speed
-		cameraVelocity = max(cameraVelocity - speed, 0)
-	if cameraVelocity < 0:
-		$Camera.position.x -= speed
-		cameraVelocity = min(cameraVelocity + speed, 0)
+	if cameraVelocityX != 0:
+		var speed = camera_move_speed * delta * abs(cameraVelocityX) * Engine.get_frames_per_second()
+		if cameraVelocityX > 0:
+			$Camera.position.x += speed
+			cameraVelocityX = max(cameraVelocityX - speed, 0)
+		if cameraVelocityX < 0:
+			$Camera.position.x -= speed
+			cameraVelocityX = min(cameraVelocityX + speed, 0)
+	if cameraVelocityY != 0:
+		var speed = camera_move_speed * delta * abs(cameraVelocityY) * Engine.get_frames_per_second()
+		if cameraVelocityY > 0:
+			$Camera.position.y += speed
+			cameraVelocityY = max(cameraVelocityY - speed, 0)
+		if cameraVelocityY < 0:
+			$Camera.position.y -= speed
+			cameraVelocityY = min(cameraVelocityY + speed, 0)
 	$Sky.handle_move($Camera.position.x, delta)
 	
 func _on_Balance_updated(balance):
