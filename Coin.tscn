@@ -6,7 +6,9 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 100.103
 
-[node name="Coin" type="Area2D"]
+[node name="Coin" type="Area2D" groups=[
+"coins",
+]]
 scale = Vector2( 0.1, 0.1 )
 space_override = 1
 script = ExtResource( 2 )

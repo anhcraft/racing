@@ -39,6 +39,16 @@ func set_origin(pos: int):
 	self.pos = pos
 	update()
 
+func _process(delta):
+	var coins = get_tree().get_nodes_in_group("coins")
+	var edge = pos - get_viewport().size.x * 0.5
+	var i = 0
+	for coin in coins:
+		if coin is Area2D:
+			var x = coin.position.x
+			if coin.position.x <= edge:
+				coin.queue_free()
+
 func _draw():
 	var groundPoints = PoolVector2Array()
 	var grassTopPoints = PoolVector2Array()
