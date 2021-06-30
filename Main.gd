@@ -76,8 +76,9 @@ func _on_ContinueBtn_button_down():
 			dsc.hide()
 
 	$Car.mode = RigidBody2D.MODE_KINEMATIC
-	$Car.position.y = 0
+	$Car.position.y -= 300
+	$"/root/Player".position = $Car.position.x
 	$Car.rotation = 0
-	yield(get_tree().create_timer(1.0), "timeout")
+	yield(get_tree().create_timer(0.1), "timeout")
 	$"/root/Player".stopped = false
 	$Car.mode = RigidBody2D.MODE_RIGID
