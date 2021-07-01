@@ -4,8 +4,8 @@ const owned_txt = preload("res://owned_btn.png")
 const buy_txt = preload("res://buy_btn.png")
 
 export(Dictionary) var items = {
-	rapid_rolling = 10000,
-	early_boost = 20000
+	rapid_rolling = 20000,
+	early_boost = 10000
 };
 
 var selectedItem;
