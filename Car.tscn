@@ -34,3 +34,7 @@ texture = ExtResource( 2 )
 position = Vector2( 0.353561, 0.353546 )
 enabled = true
 cast_to = Vector2( 0, -50 )
+
+[node name="EarlyBoostTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true

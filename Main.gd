@@ -93,6 +93,7 @@ func _on_PlayBtn_button_down():
 	yield(get_tree().create_timer(0.1), "timeout")
 	$"/root/Player".stopped = false
 	$Car.mode = RigidBody2D.MODE_RIGID
+	$Car.on_car_start()
 
 func _on_ContinueBtn_button_down():
 	var ds = $DeathScreen.get_children()
