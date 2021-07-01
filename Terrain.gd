@@ -56,9 +56,32 @@ export var grass_height_min = 0;
 export var grass_height_max = 30;
 export var grass_poly_size = 3;
 
-export var coin_spawn_chance = 0.5;
+export var coin_spawn_step = 30;
+export(Array, Dictionary) var coin_config = [
+	{
+		chance = 0.2,
+		offset = 0,
+		special = false
+	},
+	{
+		chance = 0.3,
+		offset = 100,
+		special = false
+	},
+	{
+		chance = 0.01,
+		offset = 120,
+		special = true
+	},
+	{
+		chance = 0.05,
+		offset = 300,
+		special = true
+	}
+];
 
 const coinScene = preload("res://Coin.tscn")
+const specialCoinScene = preload("res://SpecialCoin.tscn")
 
 var terrainNoise: OpenSimplexNoise;
 var terrain2Noise: OpenSimplexNoise;
@@ -87,7 +110,7 @@ func _ready():
 	grassNoise.octaves = 5
 	grassNoise.period = 1.0
 
-	terrain_outer_x = get_viewport().size.x
+	terrain_outer_x = get_viewport().size.x * 1.2
 	terrain_outer_y = get_viewport().size.y
 
 	current_terrain2_config = -1
@@ -102,8 +125,8 @@ func _process(delta):
 	var i = 0
 	for coin in coins:
 		if coin is Area2D:
-			var x = coin.position.x
 			if coin.position.x <= edge:
+				generatedCoins.erase(coin.name)
 				coin.queue_free()
 
 func get_terrain2_config(x: int):
@@ -152,13 +175,16 @@ func _draw():
 		if x % terrain_poly_size == 0:
 			groundPoints.push_back(Vector2(x, h - d))
 
-			if !generatedCoins.has(x):
-				generatedCoins[x] = true
-
-				if randf() <= coin_spawn_chance:
-					var coin = coinScene.instance()
-					coin.position = Vector2(x, h - (d + grass_height_max))
-					add_child(coin)
+		if x % coin_spawn_step == 0:
+			var name = str(x);
+			if !generatedCoins.has(name):
+				generatedCoins[name] = true
+				for c in coin_config:
+					if randf() <= c["chance"]:
+						var coin = specialCoinScene.instance() if c["special"] else coinScene.instance()
+						coin.name = name;
+						coin.position = Vector2(x, h - (d + grass_height_max + c["offset"]))
+						add_child(coin)
 
 		if x % grass_poly_size == 0:
 			# seperate grass between regions

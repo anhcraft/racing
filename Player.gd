@@ -15,8 +15,8 @@ func init():
 	update_energy(0)
 	stopped = true
 
-func deposit():
-	update_balance(balance + 1)
+func deposit(delta: int):
+	update_balance(balance + delta)
 
 func update_balance(value: int):
 	if stopped:
