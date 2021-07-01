@@ -92,6 +92,9 @@ var current_terrain2_config: int;
 var generatedCoins = {};
 
 func _ready():
+	init()
+
+func init():
 	terrainNoise = OpenSimplexNoise.new()
 	terrainNoise.seed = randi()
 	terrainNoise.octaves = 2
@@ -112,7 +115,9 @@ func _ready():
 	terrain_outer_x = get_viewport().size.x * 1.2
 	terrain_outer_y = get_viewport().size.y
 
+	pos = 0
 	current_terrain2_config = -1
+	generatedCoins = {}
 
 func set_origin(pos: int):
 	self.pos = pos

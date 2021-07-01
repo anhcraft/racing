@@ -18,9 +18,8 @@ func _ready():
 	width = get_viewport().size.x
 	height = get_viewport().size.y
 
+	$Car.position.y -= 300
 	$Car.position.x = width * 0.5
-	cameraVelocityX = $Car.position.x
-	$"/root/Player".position = $Car.position.x
 
 	$"/root/Player".connect("updateBalance", self, "_on_Balance_updated")
 	$"/root/Player".connect("updateEnergy", self, "_on_Energy_updated")
@@ -73,7 +72,17 @@ func _on_PlayBtn_button_down():
 	for dsc in ds:
 		if dsc is CanvasItem:
 			dsc.hide()
+
+	$"/root/Player".init()
+	$Terrain.init()
+	$Car.mode = RigidBody2D.MODE_KINEMATIC
+	$Car.rotation = 0
+	$Car.position.y -= 300
+	$Car.position.x = width * 0.5
+	$"/root/Player".position = $Car.position.x
+	yield(get_tree().create_timer(0.1), "timeout")
 	$"/root/Player".stopped = false
+	$Car.mode = RigidBody2D.MODE_RIGID
 
 func _on_ContinueBtn_button_down():
 	var ds = $DeathScreen.get_children()
@@ -82,9 +91,20 @@ func _on_ContinueBtn_button_down():
 			dsc.hide()
 
 	$Car.mode = RigidBody2D.MODE_KINEMATIC
+	$Car.rotation = 0
 	$Car.position.y -= 300
 	$"/root/Player".position = $Car.position.x
-	$Car.rotation = 0
 	yield(get_tree().create_timer(0.1), "timeout")
 	$"/root/Player".stopped = false
 	$Car.mode = RigidBody2D.MODE_RIGID
+
+func _on_BackBtn_button_down():
+	var ds = $DeathScreen.get_children()
+	for dsc in ds:
+		if dsc is CanvasItem:
+			dsc.hide()
+	ds = $MainScreen.get_children()
+	for dsc in ds:
+		if dsc is CanvasItem:
+			dsc.show()
+	$"/root/Player".init()

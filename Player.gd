@@ -11,6 +11,7 @@ var energy;
 var stopped = false;
 
 func init():
+	stopped = false
 	update_balance(0)
 	update_energy(0)
 	stopped = true
