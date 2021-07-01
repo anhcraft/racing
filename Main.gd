@@ -80,9 +80,11 @@ func _on_PlayBtn_button_down():
 	$Terrain.init()
 	$Car.mode = RigidBody2D.MODE_KINEMATIC
 	$Car.rotation = 0
-	$Car.position.y -= 300
+	$Car.position.y = 0
 	$Car.position.x = width * 0.5
 	$"/root/Player".position = $Car.position.x
+	$Camera.position.x = $Car.position.x # move back immediately
+	$Terrain.set_origin($Car.position.x)
 	yield(get_tree().create_timer(0.1), "timeout")
 	$"/root/Player".stopped = false
 	$Car.mode = RigidBody2D.MODE_RIGID
