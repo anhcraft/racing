@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Terrain.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sky.tscn" type="PackedScene" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://PTSans-Regular.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://energy_bar.png" type="Texture" id=6]
 [ext_resource path="res://Rajdhani-Regular.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://cart.png" type="Texture" id=8]
+[ext_resource path="res://Store.tscn" type="PackedScene" id=9]
 
 [sub_resource type="DynamicFont" id=1]
 size = 72
@@ -159,13 +161,31 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="StoreBtn" type="TextureButton" parent="MainScreen"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -101.736
+margin_top = -102.996
+margin_right = 47.2638
+margin_bottom = 46.004
+rect_scale = Vector2( 0.5, 0.5 )
+texture_normal = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="DataSaveTask" type="Timer" parent="."]
 wait_time = 15.0
 autostart = true
+
+[node name="Store" parent="." instance=ExtResource( 9 )]
 
 [connection signal="moving" from="Car" to="." method="_on_Car_moving"]
 [connection signal="overturn" from="Car" to="." method="_on_Car_overturn"]
 [connection signal="button_down" from="DeathScreen/ContinueBtn" to="." method="_on_ContinueBtn_button_down"]
 [connection signal="button_down" from="DeathScreen/BackBtn" to="." method="_on_BackBtn_button_down"]
 [connection signal="button_down" from="MainScreen/PlayBtn" to="." method="_on_PlayBtn_button_down"]
+[connection signal="button_down" from="MainScreen/StoreBtn" to="." method="_on_StoreBtn_button_down"]
 [connection signal="timeout" from="DataSaveTask" to="." method="_on_DataSaveTask_timeout"]

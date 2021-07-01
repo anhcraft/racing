@@ -14,6 +14,11 @@ func _ready():
 	for dsc in ds:
 		if dsc is CanvasItem:
 			dsc.hide()
+	
+	var sc = $Store.get_children()
+	for si in sc:
+		if si is CanvasItem:
+			si.hide()
 
 	width = get_viewport().size.x
 	height = get_viewport().size.y
@@ -113,6 +118,13 @@ func _on_BackBtn_button_down():
 		if dsc is CanvasItem:
 			dsc.show()
 	$"/root/Player".init()
+
+func _on_StoreBtn_button_down():
+	var sc = $Store.get_children()
+	for si in sc:
+		if si is CanvasItem:
+			si.show()
+	$Store.init()
 
 func _on_DataSaveTask_timeout():
 	$"/root/User".save_game()
