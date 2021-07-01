@@ -15,6 +15,8 @@ var selectedItem;
 func init():
 	initItem("rapid_rolling", $ItemList/RapidRolling/Price)
 	initItem("early_boost", $ItemList/EarlyBoost/Price)
+	initItem("blue_skin", $ItemList/BlueCar/Price)
+	initItem("pink_skin", $ItemList/PinkCar/Price)
 	$Balance.text = "%d coins" % $"/root/User".data.balance
 	$OrderConfirm.hide()
 	$PopupDialog.hide()
