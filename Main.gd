@@ -113,3 +113,6 @@ func _on_BackBtn_button_down():
 		if dsc is CanvasItem:
 			dsc.show()
 	$"/root/Player".init()
+
+func _on_DataSaveTask_timeout():
+	$"/root/User".save_game()

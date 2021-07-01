@@ -17,6 +17,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
+User="*res://User.gd"
 Player="*res://Player.gd"
 
 [display]

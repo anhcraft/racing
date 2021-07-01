@@ -8,11 +8,11 @@
 [ext_resource path="res://energy_bar.png" type="Texture" id=6]
 [ext_resource path="res://Rajdhani-Regular.ttf" type="DynamicFontData" id=7]
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=1]
 size = 72
 font_data = ExtResource( 5 )
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=2]
 size = 100
 font_data = ExtResource( 5 )
 
@@ -20,7 +20,7 @@ font_data = ExtResource( 5 )
 size = 36
 font_data = ExtResource( 5 )
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=4]
 size = 120
 font_data = ExtResource( 7 )
 
@@ -46,7 +46,7 @@ anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -373.0
 margin_bottom = 94.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 1 )
 align = 2
 clip_text = true
 __meta__ = {
@@ -82,7 +82,7 @@ anchor_right = 1.0
 anchor_bottom = 0.5
 margin_top = -153.0
 margin_bottom = -23.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 2 )
 text = "WASTED"
 align = 1
 valign = 1
@@ -136,7 +136,7 @@ anchor_right = 1.0
 anchor_bottom = 0.5
 margin_top = -156.0
 margin_bottom = -2.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 4 )
 text = "GO RACING!"
 align = 1
 valign = 1
@@ -159,8 +159,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="DataSaveTask" type="Timer" parent="."]
+wait_time = 15.0
+autostart = true
+
 [connection signal="moving" from="Car" to="." method="_on_Car_moving"]
 [connection signal="overturn" from="Car" to="." method="_on_Car_overturn"]
 [connection signal="button_down" from="DeathScreen/ContinueBtn" to="." method="_on_ContinueBtn_button_down"]
 [connection signal="button_down" from="DeathScreen/BackBtn" to="." method="_on_BackBtn_button_down"]
 [connection signal="button_down" from="MainScreen/PlayBtn" to="." method="_on_PlayBtn_button_down"]
+[connection signal="timeout" from="DataSaveTask" to="." method="_on_DataSaveTask_timeout"]
