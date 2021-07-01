@@ -118,6 +118,8 @@ func _on_BackBtn_button_down():
 	for dsc in ds:
 		if dsc is CanvasItem:
 			dsc.show()
+	$"/root/User".data.balance += $"/root/Player".balance
+	$"/root/User".save_game()
 	$"/root/Player".init()
 
 func _on_StoreBtn_button_down():
