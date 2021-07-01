@@ -41,6 +41,9 @@ func _on_Car_overturn():
 	for dsc in ds:
 		if dsc is CanvasItem:
 			dsc.show()
+	$"/root/Player".deathCount += 1
+	if $"/root/Player".deathCount >= 3:
+		$DeathScreen/ContinueBtn.hide()
 
 func _process(delta):
 	if cameraVelocityX != 0:

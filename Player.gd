@@ -9,11 +9,13 @@ var balance;
 var position = 0;
 var energy;
 var stopped = false;
+var deathCount = 0;
 
 func init():
 	stopped = false
 	update_balance(0)
 	update_energy(0)
+	deathCount = 0
 	stopped = true
 
 func deposit(delta: int):
