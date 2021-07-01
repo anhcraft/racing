@@ -176,6 +176,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Skin" type="ColorRect" parent="MainScreen"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -84.7361
+margin_top = -164.776
+margin_right = -44.7361
+margin_bottom = -124.776
+color = Color( 0.890196, 0.352941, 0.352941, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="DataSaveTask" type="Timer" parent="."]
 wait_time = 15.0
 autostart = true
@@ -188,4 +202,5 @@ autostart = true
 [connection signal="button_down" from="DeathScreen/BackBtn" to="." method="_on_BackBtn_button_down"]
 [connection signal="button_down" from="MainScreen/PlayBtn" to="." method="_on_PlayBtn_button_down"]
 [connection signal="button_down" from="MainScreen/StoreBtn" to="." method="_on_StoreBtn_button_down"]
+[connection signal="gui_input" from="MainScreen/Skin" to="." method="_on_Skin_gui_input"]
 [connection signal="timeout" from="DataSaveTask" to="." method="_on_DataSaveTask_timeout"]

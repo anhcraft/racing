@@ -1,6 +1,7 @@
 extends Node
 
 var data = {
+	skin = "red",
 	balance = 0,
 	owned_items = [],
 };
@@ -14,7 +15,9 @@ func load_game():
 		return
 	file.open("user://user.save", File.READ)
 	while file.get_position() < file.get_len():
-		data = parse_json(file.get_line())
+		var t = parse_json(file.get_line()) as Dictionary
+		for k in t.keys():
+			data[k] = t.get(k)
 	file.close()
 
 func save_game():

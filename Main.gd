@@ -1,6 +1,11 @@
 extends Node2D
 
 export var camera_move_speed = 0.05
+export(Dictionary) var skin_icons = {
+	"red": Color8(227, 90, 90),
+	"blue": Color8(68, 154, 235),
+	"pink": Color8(177, 110, 235)
+};
 
 var width;
 var height;
@@ -29,6 +34,8 @@ func _ready():
 	$"/root/Player".connect("updateBalance", self, "_on_Balance_updated")
 	$"/root/Player".connect("updateEnergy", self, "_on_Energy_updated")
 	$"/root/Player".init()
+	$MainScreen/Skin.color = skin_icons[$"/root/User".data.skin]
+	$Car.update_skin()
 
 func _on_Car_moving():
 	if abs($Car.position.x - $Camera.position.x) >= 0.05 * width:
@@ -131,3 +138,18 @@ func _on_StoreBtn_button_down():
 
 func _on_DataSaveTask_timeout():
 	$"/root/User".save_game()
+
+func _on_Skin_gui_input(event: InputEvent):
+	if event is InputEventMouseButton && event.is_pressed():
+		var list = ["red"];
+		var items = $"/root/User".data.owned_items as Array;
+		if items.has("blue_skin"):
+			list.append("blue")
+		if items.has("pink_skin"):
+			list.append("pink")
+		var ind = list.find($"/root/User".data.skin)
+		var new_ind = 0 if ind == list.size() - 1 else ind + 1
+		if ind != new_ind:
+			$"/root/User".data.skin = list[new_ind]
+			$MainScreen/Skin.color = skin_icons[$"/root/User".data.skin]
+			$Car.update_skin()

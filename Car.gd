@@ -10,6 +10,10 @@ export var car_ultra_boost_speed = 300
 export var car_early_boost_speed = 200
 export var car_rapid_rolling_speed = 400
 
+const redSkin = preload("res://car_body.png")
+const blueSkin = preload("res://car_body_blue.png")
+const pinkSkin = preload("res://car_body_pink.png")
+
 var lastBoostTime = 0
 var wheelRotate = 0
 
@@ -17,6 +21,15 @@ func on_car_start():
 	if ($"/root/User".data.owned_items as Array).has("early_boost"):
 		print("start")
 		$EarlyBoostTimer.start()
+
+func update_skin():
+	var skin = $"/root/User".data.skin
+	if skin == "red":
+		$Body.texture = redSkin
+	elif skin == "blue":
+		$Body.texture = blueSkin
+	elif skin == "pink":
+		$Body.texture = pinkSkin
 
 func _process(delta):
 	if self.linear_velocity.length() >= 50:
