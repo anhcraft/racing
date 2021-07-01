@@ -118,6 +118,11 @@ func init():
 	pos = 0
 	current_terrain2_config = -1
 	generatedCoins = {}
+	
+	var coins = get_tree().get_nodes_in_group("coins")
+	for coin in coins:
+		if coin is Area2D:
+			coin.queue_free()
 
 func set_origin(pos: int):
 	self.pos = pos
