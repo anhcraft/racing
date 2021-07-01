@@ -5,7 +5,9 @@ const buy_txt = preload("res://buy_btn.png")
 
 export(Dictionary) var items = {
 	rapid_rolling = 20000,
-	early_boost = 10000
+	early_boost = 10000,
+	blue_skin = 5000,
+	pink_skin = 5000
 };
 
 var selectedItem;

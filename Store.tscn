@@ -73,9 +73,9 @@ __meta__ = {
 
 [node name="ItemList" type="VBoxContainer" parent="."]
 margin_left = 80.9086
-margin_top = 209.763
+margin_top = 121.763
 margin_right = 883.909
-margin_bottom = 399.763
+margin_bottom = 413.763
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -129,6 +129,56 @@ margin_right = 589.0
 margin_bottom = 70.0
 texture_normal = ExtResource( 4 )
 
+[node name="BlueCar" type="HBoxContainer" parent="ItemList"]
+margin_top = 148.0
+margin_right = 803.0
+margin_bottom = 218.0
+custom_constants/separation = 50
+alignment = 1
+
+[node name="Name" type="Label" parent="ItemList/BlueCar"]
+margin_left = 227.0
+margin_top = 14.0
+margin_right = 347.0
+margin_bottom = 56.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Blue Skin"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Price" type="TextureButton" parent="ItemList/BlueCar"]
+margin_left = 397.0
+margin_right = 576.0
+margin_bottom = 70.0
+texture_normal = ExtResource( 4 )
+
+[node name="PinkCar" type="HBoxContainer" parent="ItemList"]
+margin_top = 222.0
+margin_right = 803.0
+margin_bottom = 292.0
+custom_constants/separation = 50
+alignment = 1
+
+[node name="Name" type="Label" parent="ItemList/PinkCar"]
+margin_left = 228.0
+margin_top = 14.0
+margin_right = 346.0
+margin_bottom = 56.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Pink Skin"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Price" type="TextureButton" parent="ItemList/PinkCar"]
+margin_left = 396.0
+margin_right = 575.0
+margin_bottom = 70.0
+texture_normal = ExtResource( 4 )
+
 [node name="OrderConfirm" type="ConfirmationDialog" parent="."]
 visible = true
 anchor_left = 0.5
@@ -173,5 +223,7 @@ __meta__ = {
 
 [connection signal="button_down" from="ItemList/RapidRolling/Price" to="." method="_on_Price_button_down" binds= [ "rapid_rolling" ]]
 [connection signal="button_down" from="ItemList/EarlyBoost/Price" to="." method="_on_Price_button_down" binds= [ "early_boost" ]]
+[connection signal="button_down" from="ItemList/BlueCar/Price" to="." method="_on_Price_button_down" binds= [ "blue_skin" ]]
+[connection signal="button_down" from="ItemList/PinkCar/Price" to="." method="_on_Price_button_down" binds= [ "pink_skin" ]]
 [connection signal="confirmed" from="OrderConfirm" to="." method="_on_OrderConfirm_confirmed"]
 [connection signal="button_down" from="BackBtn" to="." method="_on_BackBtn_button_down"]
