@@ -50,11 +50,10 @@ export(Array, Dictionary) var terrain2_config = [
 		from_range = 1000000
 	}
 ];
-export var terrain_poly_size = 100;
+export var terrain_poly_size = 150;
 
 export var grass_height_min = 0;
 export var grass_height_max = 30;
-export var grass_poly_size = 3;
 
 export var coin_spawn_step = 30;
 export(Array, Dictionary) var coin_config = [
@@ -145,23 +144,14 @@ func get_terrain2_config(x: int):
 
 	return terrain2_config[current_terrain2_config]
 
-func get_next_terrain2_config(x: int):
-	if x < terrain2_config[current_terrain2_config]["from_range"]:
-		return terrain2_config[current_terrain2_config]
-	elif (current_terrain2_config + 1 < terrain2_config.size()) && x < terrain2_config[current_terrain2_config + 1]["from_range"]:
-		return terrain2_config[current_terrain2_config]
-	return terrain2_config[min(current_terrain2_config + 1, terrain2_config.size() - 1)]
-
 func _draw():
 	var groundPoints = PoolVector2Array()
-	var grassLastLayer = PoolVector2Array()
 	var grassTopPoints = PoolVector2Array()
 	var grassBottomPoints = PoolVector2Array()
 	var w = get_viewport().size.x
 	var m = w + terrain_outer_x * 2
 	var h = get_viewport().size.y
 	var maxY = -h;
-	var grassLayerBroken = false;
 
 	for n in m:
 		var x = n - terrain_outer_x + pos
@@ -171,9 +161,6 @@ func _draw():
 		if t2 != null:
 			d -= t2["min_height"] + ((terrain2Noise.get_noise_1d(x) + 1) * 0.5) * (t2["max_height"] - t2["min_height"])
 		maxY = max(maxY, h - d)
-
-		if x % terrain_poly_size == 0:
-			groundPoints.push_back(Vector2(x, h - d))
 
 		if x % coin_spawn_step == 0:
 			var name = str(x);
@@ -186,30 +173,18 @@ func _draw():
 						coin.position = Vector2(x, h - (d + grass_height_max + c["offset"]))
 						add_child(coin)
 
-		if x % grass_poly_size == 0:
-			# seperate grass between regions
-			var delta = get_next_terrain2_config(x)["from_range"] - x
-			if delta >= 0 && delta < terrain_poly_size:
-				grassLayerBroken = true
-			# reduce the number of redraws to ONE only by marking BEFORE
-			# and then executing when the next terrain state REACHED
-			elif grassLayerBroken && delta <= 0:
-				grassLayerBroken = false
-				grassLastLayer.append_array(grassTopPoints)
-				grassLastLayer.append_array(grassBottomPoints)
-				grassTopPoints.resize(0)
-				grassBottomPoints.resize(0)
-			elif !grassLayerBroken:
-				grassBottomPoints.push_back(Vector2(x, h - d + 30))
-				var g = (grassNoise.get_noise_1d(x) + 1) * 0.5
-				d += grass_height_min + g * (grass_height_max - grass_height_min)
-				grassTopPoints.insert(0, Vector2(x, h - d))
+		if x % terrain_poly_size == 0:
+			groundPoints.push_back(Vector2(x, h - d))
+
+			grassBottomPoints.push_back(Vector2(x, h - d))
+			var g = (grassNoise.get_noise_1d(x) + 1) * 0.5
+			d += grass_height_min + g * (grass_height_max - grass_height_min)
+			grassTopPoints.insert(0, Vector2(x, h - d))
 
 	groundPoints.push_back(Vector2(pos + w + terrain_outer_x, maxY + terrain_outer_y))
 	groundPoints.push_back(Vector2(pos - terrain_outer_x, maxY + terrain_outer_y))
 	draw_polygon(groundPoints, PoolColorArray([Color8(153, 110, 11)]))
 
-	draw_polygon(grassLastLayer, PoolColorArray([Color8(90, 173, 93)]))
 	var grassPoints = PoolVector2Array(grassTopPoints)
 	grassPoints.append_array(grassBottomPoints)
 	draw_polygon(grassPoints, PoolColorArray([Color8(90, 173, 93)]))
