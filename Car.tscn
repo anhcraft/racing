@@ -19,16 +19,16 @@ script = ExtResource( 3 )
 visible = false
 polygon = PoolVector2Array( -57.7026, -45.6258, 19.3719, -44.2116, 45.5349, -39.2619, 88.3148, -3.19945, 116.953, 2.81096, 118.013, 52.3084, 96.4465, 52.3084, 92.2039, 60.7936, 84.0722, 66.8041, 74.8798, 67.5112, 64.9803, 63.6221, 58.2628, 53.0155, -52.3993, 52.3084, -56.642, 61.5008, -66.1879, 67.8647, -77.8551, 67.8647, -85.9869, 62.2079, -90.583, 52.6619, -119.221, 51.9548, -119.221, 6.34649, -114.978, -1.78523 )
 
-[node name="Body" type="Sprite" parent="."]
-texture = ExtResource( 1 )
-
 [node name="FrontWheel" type="Sprite" parent="."]
-position = Vector2( 76.9258, 51.9131 )
+position = Vector2( 76.9258, 48.9131 )
 texture = ExtResource( 2 )
 
 [node name="BackWheel" type="Sprite" parent="."]
-position = Vector2( -71.7345, 51.9131 )
+position = Vector2( -71.7345, 48.9131 )
 texture = ExtResource( 2 )
+
+[node name="Body" type="Sprite" parent="."]
+texture = ExtResource( 1 )
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2( 0.353561, 0.353546 )
