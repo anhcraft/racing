@@ -1,6 +1,6 @@
 extends Node
 
-export var energy_ratio = 0.05;
+export var energy_ratio = 0.01;
 
 signal updateBalance
 signal updateEnergy
