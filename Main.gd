@@ -54,7 +54,7 @@ func _on_Car_overturn():
 		if dsc is CanvasItem:
 			dsc.show()
 	$"/root/Player".deathCount += 1
-	if $"/root/Player".deathCount >= 3:
+	if $"/root/Player".deathCount >= 2:
 		$DeathScreen/ContinueBtn.hide()
 
 func _process(delta):
