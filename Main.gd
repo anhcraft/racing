@@ -45,13 +45,13 @@ func _ready():
 		$NightLayer/NightOverlay.hide()
 
 func _on_Car_moving():
-	if abs($Car.position.x - $Camera.position.x) >= 0.05 * width:
+	if abs($Car.position.x - $Camera.position.x) >= 0.2 * width:
 		cameraVelocityX = $Car.position.x - $Camera.position.x
 		if cameraVelocityX > 0:
 			$"/root/Player".boost(abs($Car.position.x - $"/root/Player".position))
 		$"/root/Player".position = $Car.position.x
 		$Terrain.set_origin($"/root/Player".position)
-	if abs($Car.position.y - $Camera.position.y) >= 0.05 * height:
+	if abs($Car.position.y - $Camera.position.y) >= 0.2 * height:
 		cameraVelocityY = $Car.position.y - $Camera.position.y
 
 func _on_Car_overturn():

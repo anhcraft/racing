@@ -1,6 +1,6 @@
 extends Node2D
 
-export var terrain_update_threshold = 80;
+export var terrain_update_threshold = 50;
 export var terrain_height_min = 10;
 export var terrain_height_max = 300;
 export(Array, Dictionary) var terrain2_config = [
@@ -104,13 +104,13 @@ func init():
 	grassNoise.octaves = 5
 	grassNoise.period = 1.0
 
-	terrain_outer_x = get_viewport().size.x * 1.5
-	terrain_outer_y = get_viewport().size.y * 0.5
+	terrain_outer_x = get_viewport().size.x * 1.2
+	terrain_outer_y = get_viewport().size.y * 0.7
 
 	pos = 0
 	current_terrain2_config = -1
 	generatedCoins = {}
-	
+
 	coin_spawn_step = def_coin_spawn_step
 	if ($"/root/User".data.owned_items as Array).has("more_coins"):
 		coin_spawn_step /= 2
@@ -160,15 +160,24 @@ func _draw():
 	var m = w + terrain_outer_x
 	var h = get_viewport().size.y
 	var maxY = -h;
+	var last_y = 0
 
 	for n in m:
 		var x = n - terrain_outer_x + pos
 
-		var d = terrain_height_min + ((terrainNoise.get_noise_1d(x) + 1) * 0.5) * (terrain_height_max - terrain_height_min)
-		var t2 = get_terrain2_config(x)
-		if t2 != null:
-			d -= t2["min_height"] + ((terrain2Noise.get_noise_1d(x) + 1) * 0.5) * (t2["max_height"] - t2["min_height"])
-		maxY = max(maxY, h - d)
+		if x % terrain_poly_size == 0:
+			var d = terrain_height_min + ((terrainNoise.get_noise_1d(x) + 1) * 0.5) * (terrain_height_max - terrain_height_min)
+			var t2 = get_terrain2_config(x)
+			if t2 != null:
+				d -= t2["min_height"] + ((terrain2Noise.get_noise_1d(x) + 1) * 0.5) * (t2["max_height"] - t2["min_height"])
+			last_y = h - d
+			maxY = max(maxY, last_y)
+			groundPoints.push_back(Vector2(x, h - d))
+
+			grassBottomPoints.push_back(Vector2(x, h - d))
+			var g = (grassNoise.get_noise_1d(x) + 1) * 0.5
+			d += grass_height_min + g * (grass_height_max - grass_height_min)
+			grassTopPoints.insert(0, Vector2(x, h - d))
 
 		if x % coin_spawn_step == 0:
 			var name = str(x);
@@ -178,16 +187,8 @@ func _draw():
 					if randf() <= c["chance"]:
 						var coin = specialCoinScene.instance() if c["special"] else coinScene.instance()
 						coin.name = name;
-						coin.position = Vector2(x, h - (d + grass_height_max + c["offset"]))
+						coin.position = Vector2(x, last_y - (grass_height_max + c["offset"]))
 						add_child(coin)
-
-		if x % terrain_poly_size == 0:
-			groundPoints.push_back(Vector2(x, h - d))
-
-			grassBottomPoints.push_back(Vector2(x, h - d))
-			var g = (grassNoise.get_noise_1d(x) + 1) * 0.5
-			d += grass_height_min + g * (grass_height_max - grass_height_min)
-			grassTopPoints.insert(0, Vector2(x, h - d))
 
 	groundPoints.push_back(Vector2(pos + w + terrain_outer_x, maxY + terrain_outer_y))
 	groundPoints.push_back(Vector2(pos - terrain_outer_x, maxY + terrain_outer_y))
