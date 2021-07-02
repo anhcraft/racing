@@ -93,7 +93,5 @@ func _process(delta):
 		emit_signal("moving")
 
 func _on_Car_body_entered(body):
-	if runBeforeBrake && !$"/root/Player".stopped && self.linear_velocity.length() < total_car_speed * 0.2 && $DownRayCast.get_collider() != null:
-		$BrakeSound.play()
 	if !$GroundHitSound.playing && $DownRayCast.get_collider() != null && self.linear_velocity.y > 200:
 		$GroundHitSound.play()
