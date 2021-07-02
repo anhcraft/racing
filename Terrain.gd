@@ -56,7 +56,7 @@ export var terrain_poly_size = 250;
 export var grass_height_min = 0;
 export var grass_height_max = 30;
 
-export var coin_spawn_step = 30;
+export var def_coin_spawn_step = 30;
 export(Array, Dictionary) var coin_config = [
 	{
 		chance = 0.2,
@@ -81,6 +81,7 @@ var terrain_outer_x: int;
 var terrain_outer_y: int;
 var current_terrain2_config: int;
 var generatedCoins = {};
+var coin_spawn_step = def_coin_spawn_step;
 
 func _ready():
 	init()
@@ -109,6 +110,10 @@ func init():
 	pos = 0
 	current_terrain2_config = -1
 	generatedCoins = {}
+	
+	coin_spawn_step = def_coin_spawn_step
+	if ($"/root/User".data.owned_items as Array).has("more_coins"):
+		coin_spawn_step /= 2
 	
 	var coins = get_tree().get_nodes_in_group("coins")
 	for coin in coins:
