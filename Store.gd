@@ -7,7 +7,8 @@ export(Dictionary) var items = {
 	rapid_rolling = 15000,
 	early_boost = 3000,
 	blue_skin = 20000,
-	pink_skin = 20000
+	pink_skin = 20000,
+	resurrection = 50000
 };
 
 var selectedItem;
@@ -17,6 +18,7 @@ func init():
 	initItem("early_boost", $ItemList/EarlyBoost/Price)
 	initItem("blue_skin", $ItemList/BlueCar/Price)
 	initItem("pink_skin", $ItemList/PinkCar/Price)
+	initItem("resurrection", $ItemList/Resurrection/Price)
 	$Balance.text = "%d coins" % $"/root/User".data.balance
 	$OrderConfirm.hide()
 	$PopupDialog.hide()

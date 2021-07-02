@@ -57,7 +57,10 @@ func _on_Car_overturn():
 		if dsc is CanvasItem:
 			dsc.show()
 	$"/root/Player".deathCount += 1
-	if $"/root/Player".deathCount >= 2:
+	var max_deaths = 1
+	if ($"/root/User".data.owned_items as Array).has("resurrection"):
+		max_deaths += 1
+	if $"/root/Player".deathCount >= max_deaths:
 		$DeathScreen/ContinueBtn.hide()
 
 func _process(delta):
@@ -120,6 +123,7 @@ func _on_ContinueBtn_button_down():
 	yield(get_tree().create_timer(0.1), "timeout")
 	$"/root/Player".stopped = false
 	$Car.mode = RigidBody2D.MODE_RIGID
+	$Car.on_car_start()
 
 func _on_BackBtn_button_down():
 	var ds = $DeathScreen.get_children()
