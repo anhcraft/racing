@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Store.gd" type="Script" id=1]
 [ext_resource path="res://PTSans-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Rajdhani-Regular.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://locked_btn.png" type="Texture" id=4]
 [ext_resource path="res://back_btn.png" type="Texture" id=5]
+[ext_resource path="res://buy_sound.wav" type="AudioStream" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 size = 64
@@ -212,6 +213,9 @@ margin_bottom = 57.0
 theme = SubResource( 7 )
 window_title = "Store"
 dialog_autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="BackBtn" type="TextureButton" parent="."]
 anchor_left = 0.85
@@ -223,6 +227,9 @@ texture_normal = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="BuySound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
 
 [connection signal="button_down" from="ItemList/RapidRolling/Price" to="." method="_on_Price_button_down" binds= [ "rapid_rolling" ]]
 [connection signal="button_down" from="ItemList/EarlyBoost/Price" to="." method="_on_Price_button_down" binds= [ "early_boost" ]]

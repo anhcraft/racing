@@ -52,7 +52,6 @@ func _on_Car_moving():
 		cameraVelocityY = $Car.position.y - $Camera.position.y
 
 func _on_Car_overturn():
-	$"/root/Player".stopped = true
 	var ds = $DeathScreen.get_children()
 	for dsc in ds:
 		if dsc is CanvasItem:
@@ -170,6 +169,7 @@ func _on_GoBtn_button_down():
 
 func _on_GoBtn_button_up():
 	goPressing = false
+	$Car/GoReleaseSound.play()
 
 func _on_MainLoop_timeout():
 	$Foreground/FPSLabel.text = str(Engine.get_frames_per_second())

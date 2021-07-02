@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/engine_boost.wav-d5d895eb093e9070424e2a225a236138.sample"
+
+[deps]
+
+source_file="res://engine_boost.wav"
+dest_files=[ "res://.import/engine_boost.wav-d5d895eb093e9070424e2a225a236138.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=true
+compress/mode=0

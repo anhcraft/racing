@@ -17,8 +17,10 @@ const pinkSkin = preload("res://car_body_pink.png")
 
 var lastBoostTime = 0
 var wheelRotate = 0
+var runBeforeBrake = false
 
 func on_car_start():
+	$EngineRunningSound.play()
 	if ($"/root/User".data.owned_items as Array).has("early_boost"):
 		$EarlyBoostTimer.start()
 
@@ -45,6 +47,11 @@ func go():
 		speed += car_speed
 		if items.has("rapid_rolling"):
 			speed += car_rapid_rolling_speed
+	
+		if !$GoPressSound.playing:
+			$GoPressSound.play()
+
+	$EngineRunningSound.volume_db = clamp(self.linear_velocity.length() / total_car_speed, 0, 1) * 5
 
 	if items.has("early_boost") && !$EarlyBoostTimer.is_stopped():
 		$EarlyBoostTimer.stop()
@@ -68,9 +75,25 @@ func _process(delta):
 		$FrontWheel.rotate(wheelRotate)
 		$BackWheel.rotate(wheelRotate)
 
-	if !$"/root/Player".stopped && $RayCast2D.get_collider() != null:
+	if self.linear_velocity.length() >= total_car_speed:
+		runBeforeBrake = true
+
+	if self.linear_velocity.length() < total_car_speed * 0.8:
+		$GoPressSound.stop()
+
+	if !$"/root/Player".stopped && $UpRayCast.get_collider() != null:
+		$GroundHitSound.play()
+		$"/root/Player".stopped = true
+		$EngineRunningSound.stop()
+		$EarlyBoostTimer.stop()
 		emit_signal("overturn")
 		return
 
 	if self.linear_velocity.length() >= 5:
 		emit_signal("moving")
+
+func _on_Car_body_entered(body):
+	if runBeforeBrake && !$"/root/Player".stopped && self.linear_velocity.length() < total_car_speed * 0.2 && $DownRayCast.get_collider() != null:
+		$BrakeSound.play()
+	if !$GroundHitSound.playing && $DownRayCast.get_collider() != null && self.linear_velocity.y > 200:
+		$GroundHitSound.play()

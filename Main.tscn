@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Terrain.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sky.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Store.tscn" type="PackedScene" id=9]
 [ext_resource path="res://go_btn.png" type="Texture" id=10]
 [ext_resource path="res://boost_btn.png" type="Texture" id=11]
+[ext_resource path="res://bgm.wav" type="AudioStream" id=12]
 
 [sub_resource type="DynamicFont" id=1]
 size = 50
@@ -240,6 +241,10 @@ __meta__ = {
 [node name="MainLoop" type="Timer" parent="."]
 wait_time = 0.1
 autostart = true
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+autoplay = true
 
 [connection signal="moving" from="Car" to="." method="_on_Car_moving"]
 [connection signal="overturn" from="Car" to="." method="_on_Car_overturn"]

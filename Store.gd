@@ -36,6 +36,7 @@ func _on_Price_button_down(id):
 
 func _on_OrderConfirm_confirmed():
 	if $"/root/User".data.balance >= items[selectedItem]:
+		$BuySound.play()
 		$"/root/User".data.balance -= items[selectedItem]
 		($"/root/User".data.owned_items as Array).append(selectedItem)
 		$"/root/User".save_game()
