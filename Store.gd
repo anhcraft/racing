@@ -9,7 +9,8 @@ export(Dictionary) var items = {
 	blue_skin = 20000,
 	pink_skin = 20000,
 	resurrection = 50000,
-	more_coins = 20000
+	more_coins = 20000,
+	night_sky = 30000
 };
 
 var selectedItem;
@@ -21,6 +22,7 @@ func init():
 	initItem("pink_skin", $ItemList/PinkCar/Price)
 	initItem("resurrection", $ItemList/Resurrection/Price)
 	initItem("more_coins", $ItemList/MoreCoins/Price)
+	initItem("night_sky", $ItemList/NightSky/Price)
 	$Balance.text = "%d coins" % $"/root/User".data.balance
 	$OrderConfirm.hide()
 	$PopupDialog.hide()

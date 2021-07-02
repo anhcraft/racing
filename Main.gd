@@ -40,6 +40,9 @@ func _ready():
 	$"/root/Player".init()
 	$MainScreen/Skin.color = skin_icons[$"/root/User".data.skin]
 	$Car.update_skin()
+	$Sky.set_night($"/root/User".data.night)
+	if !$"/root/User".data.night:
+		$NightLayer/NightOverlay.hide()
 
 func _on_Car_moving():
 	if abs($Car.position.x - $Camera.position.x) >= 0.05 * width:
@@ -162,6 +165,7 @@ func _on_Skin_gui_input(event: InputEvent):
 		var new_ind = 0 if ind == list.size() - 1 else ind + 1
 		if ind != new_ind:
 			$"/root/User".data.skin = list[new_ind]
+			$"/root/User".save_game()
 			$MainScreen/Skin.color = skin_icons[$"/root/User".data.skin]
 			$Car.update_skin()
 
@@ -179,3 +183,13 @@ func _on_MainLoop_timeout():
 	$Foreground/FPSLabel.text = str(Engine.get_frames_per_second())
 	if goPressing:
 		$Car.go()
+
+func _on_SkyButton_button_down():
+	if ($"/root/User".data.owned_items as Array).has("night_sky"):
+		$"/root/User".data.night = !$"/root/User".data.night
+		$"/root/User".save_game()
+		$Sky.set_night($"/root/User".data.night)
+		if $"/root/User".data.night:
+			$NightLayer/NightOverlay.show()
+		else:
+			$NightLayer/NightOverlay.hide()

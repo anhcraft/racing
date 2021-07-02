@@ -78,9 +78,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -198.0
-margin_top = -232.0
+margin_top = -247.0
 margin_right = 198.0
-margin_bottom = 134.0
+margin_bottom = 267.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -233,6 +233,31 @@ margin_right = 384.0
 margin_bottom = 70.0
 texture_normal = ExtResource( 4 )
 
+[node name="NightSky" type="HBoxContainer" parent="ItemList"]
+margin_top = 444.0
+margin_right = 396.0
+margin_bottom = 514.0
+custom_constants/separation = 50
+alignment = 1
+
+[node name="Name" type="Label" parent="ItemList/NightSky"]
+margin_left = 21.0
+margin_top = 14.0
+margin_right = 146.0
+margin_bottom = 56.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Night Sky"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Price" type="TextureButton" parent="ItemList/NightSky"]
+margin_left = 196.0
+margin_right = 375.0
+margin_bottom = 70.0
+texture_normal = ExtResource( 4 )
+
 [node name="OrderConfirm" type="ConfirmationDialog" parent="."]
 visible = true
 anchor_left = 0.5
@@ -287,5 +312,6 @@ stream = ExtResource( 6 )
 [connection signal="button_down" from="ItemList/PinkCar/Price" to="." method="_on_Price_button_down" binds= [ "pink_skin" ]]
 [connection signal="button_down" from="ItemList/Resurrection/Price" to="." method="_on_Price_button_down" binds= [ "resurrection" ]]
 [connection signal="button_down" from="ItemList/MoreCoins/Price" to="." method="_on_Price_button_down" binds= [ "more_coins" ]]
+[connection signal="button_down" from="ItemList/NightSky/Price" to="." method="_on_Price_button_down" binds= [ "night_sky" ]]
 [connection signal="confirmed" from="OrderConfirm" to="." method="_on_OrderConfirm_confirmed"]
 [connection signal="button_down" from="BackBtn" to="." method="_on_BackBtn_button_down"]

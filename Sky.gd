@@ -1,6 +1,8 @@
 extends Node
 
-const txt = preload("res://cloud.png")
+const cloud_txt = preload("res://cloud.png")
+const sky_txt = preload("res://sky.png")
+const night_sky_txt = preload("res://night_sky.png")
 
 export var wind_speed = 0.1;
 export var cloud_amount = 10;
@@ -16,6 +18,12 @@ func _ready():
 
 func set_origin(pos: int):
 	self.pos = pos
+	
+func set_night(night: bool):
+	if night:
+		$CanvasLayer/Sprite.texture = night_sky_txt
+	else:
+		$CanvasLayer/Sprite.texture = sky_txt
 
 func spawn(i: int, init: bool):
 	var origin = $"/root/Player".position
@@ -25,7 +33,7 @@ func spawn(i: int, init: bool):
 		if randf() <= cloud_spawn_chance:
 			var node = Sprite.new()
 			add_child(node)
-			node.texture = txt
+			node.texture = cloud_txt
 			node.scale.x = 1 / self.scale.x
 			node.scale.y = 1 / self.scale.y
 			node.modulate = Color(1, 1, 1)

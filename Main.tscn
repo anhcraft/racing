@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Terrain.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sky.tscn" type="PackedScene" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://go_btn.png" type="Texture" id=10]
 [ext_resource path="res://boost_btn.png" type="Texture" id=11]
 [ext_resource path="res://bgm.wav" type="AudioStream" id=12]
+[ext_resource path="res://sky_btn.png" type="Texture" id=13]
 
 [sub_resource type="DynamicFont" id=1]
 size = 50
@@ -48,7 +49,18 @@ position = Vector2( 0, 0 )
 [node name="Camera" type="Camera2D" parent="."]
 current = true
 
+[node name="NightLayer" type="CanvasLayer" parent="."]
+
+[node name="NightOverlay" type="ColorRect" parent="NightLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.392157 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="HUD" type="CanvasLayer" parent="."]
+layer = 2
 
 [node name="BalanceText" type="Label" parent="HUD"]
 anchor_left = 1.0
@@ -103,6 +115,7 @@ __meta__ = {
 }
 
 [node name="DeathScreen" type="CanvasLayer" parent="."]
+layer = 5
 
 [node name="DeathOverlay" type="ColorRect" parent="DeathScreen"]
 anchor_right = 1.0
@@ -157,6 +170,7 @@ __meta__ = {
 }
 
 [node name="MainScreen" type="CanvasLayer" parent="."]
+layer = 3
 
 [node name="MainOverlay" type="ColorRect" parent="MainScreen"]
 anchor_right = 1.0
@@ -219,14 +233,28 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="SkyButton" type="TextureButton" parent="MainScreen"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 70.6353
+margin_top = -180.136
+margin_right = 198.635
+margin_bottom = -52.1356
+rect_scale = Vector2( 0.8, 0.8 )
+texture_normal = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="DataSaveTask" type="Timer" parent="."]
 wait_time = 15.0
 autostart = true
 
 [node name="Store" parent="." instance=ExtResource( 9 )]
-layer = 1
+layer = 8
 
 [node name="Foreground" type="CanvasLayer" parent="."]
+layer = 10
 
 [node name="FPSLabel" type="Label" parent="Foreground"]
 margin_left = 16.0
@@ -256,5 +284,6 @@ autoplay = true
 [connection signal="button_down" from="MainScreen/PlayBtn" to="." method="_on_PlayBtn_button_down"]
 [connection signal="button_down" from="MainScreen/StoreBtn" to="." method="_on_StoreBtn_button_down"]
 [connection signal="gui_input" from="MainScreen/Skin" to="." method="_on_Skin_gui_input"]
+[connection signal="button_down" from="MainScreen/SkyButton" to="." method="_on_SkyButton_button_down"]
 [connection signal="timeout" from="DataSaveTask" to="." method="_on_DataSaveTask_timeout"]
 [connection signal="timeout" from="MainLoop" to="." method="_on_MainLoop_timeout"]

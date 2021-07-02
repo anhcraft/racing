@@ -4,6 +4,7 @@ var data = {
 	skin = "red",
 	balance = 0,
 	owned_items = [],
+	night = false
 };
 
 func _ready():
