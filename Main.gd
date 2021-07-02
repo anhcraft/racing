@@ -1,6 +1,6 @@
 extends Node2D
 
-export var camera_move_speed = 0.08
+export var camera_move_speed = 0.05
 export(Dictionary) var skin_icons = {
 	"red": Color8(227, 90, 90),
 	"blue": Color8(68, 154, 235),
@@ -11,6 +11,7 @@ var width;
 var height;
 var cameraVelocityX = 0;
 var cameraVelocityY = 0;
+var goPressing = false;
 
 func _ready():
 	randomize()
@@ -24,6 +25,9 @@ func _ready():
 	for si in sc:
 		if si is CanvasItem:
 			si.hide()
+
+	$HUD/GoBtn.hide()
+	$HUD/BoostBtn.hide()
 
 	width = get_viewport().size.x
 	height = get_viewport().size.y
@@ -74,8 +78,8 @@ func _process(delta):
 		if cameraVelocityY < 0:
 			$Camera.position.y -= speed
 			cameraVelocityY = min(cameraVelocityY + speed, 0)
-	$Sky.handle_move($Camera.position.x, delta)
-	
+	$Sky.set_origin($Camera.position.x)
+
 func _on_Balance_updated(balance):
 	$HUD/BalanceText.text = str(balance) + " "
 
@@ -101,6 +105,8 @@ func _on_PlayBtn_button_down():
 	$"/root/Player".stopped = false
 	$Car.mode = RigidBody2D.MODE_RIGID
 	$Car.on_car_start()
+	$HUD/GoBtn.show()
+	$HUD/BoostBtn.show()
 
 func _on_ContinueBtn_button_down():
 	var ds = $DeathScreen.get_children()
@@ -128,6 +134,8 @@ func _on_BackBtn_button_down():
 	$"/root/User".data.balance += $"/root/Player".balance
 	$"/root/User".save_game()
 	$"/root/Player".init()
+	$HUD/GoBtn.hide()
+	$HUD/BoostBtn.hide()
 
 func _on_StoreBtn_button_down():
 	var sc = $Store.get_children()
@@ -153,3 +161,17 @@ func _on_Skin_gui_input(event: InputEvent):
 			$"/root/User".data.skin = list[new_ind]
 			$MainScreen/Skin.color = skin_icons[$"/root/User".data.skin]
 			$Car.update_skin()
+
+func _on_BoostBtn_button_down():
+	$Car.boost()
+
+func _on_GoBtn_button_down():
+	goPressing = true
+
+func _on_GoBtn_button_up():
+	goPressing = false
+
+func _on_MainLoop_timeout():
+	$Foreground/FPSLabel.text = str(Engine.get_frames_per_second())
+	if goPressing:
+		$Car.go()

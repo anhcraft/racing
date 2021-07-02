@@ -12,3 +12,9 @@ layer = -1
 [node name="Sprite" type="Sprite" parent="CanvasLayer"]
 texture = ExtResource( 1 )
 centered = false
+
+[node name="CloudTimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[connection signal="timeout" from="CloudTimer" to="." method="_on_CloudTimer_timeout"]

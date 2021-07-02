@@ -10,9 +10,11 @@ config_version=4
 
 [application]
 
-config/name="racing"
+config/name="Go Racing!"
+config/description="2D Racing Game"
 run/main_scene="res://Main.tscn"
 run/low_processor_mode=true
+boot_splash/image="res://sky.png"
 config/icon="res://icon.png"
 
 [autoload]
@@ -22,7 +24,8 @@ Player="*res://Player.gd"
 
 [display]
 
-window/size/resizable=false
+window/size/width=1280
+window/size/height=750
 
 [input]
 
@@ -58,6 +61,9 @@ common/enable_pause_aware_picking=true
 [rendering]
 
 quality/driver/driver_name="GLES2"
+2d/snapping/use_gpu_pixel_snap=true
+threads/thread_model=2
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
+quality/reflections/high_quality_ggx=false
 environment/default_environment="res://default_env.tres"

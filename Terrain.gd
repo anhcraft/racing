@@ -1,5 +1,6 @@
 extends Node2D
 
+export var terrain_update_threshold = 80;
 export var terrain_height_min = 10;
 export var terrain_height_max = 300;
 export(Array, Dictionary) var terrain2_config = [
@@ -50,7 +51,7 @@ export(Array, Dictionary) var terrain2_config = [
 		from_range = 1000000
 	}
 ];
-export var terrain_poly_size = 150;
+export var terrain_poly_size = 250;
 
 export var grass_height_min = 0;
 export var grass_height_max = 30;
@@ -63,18 +64,8 @@ export(Array, Dictionary) var coin_config = [
 		special = false
 	},
 	{
-		chance = 0.3,
-		offset = 100,
-		special = false
-	},
-	{
-		chance = 0.01,
-		offset = 120,
-		special = true
-	},
-	{
 		chance = 0.05,
-		offset = 300,
+		offset = 120,
 		special = true
 	}
 ];
@@ -112,8 +103,8 @@ func init():
 	grassNoise.octaves = 5
 	grassNoise.period = 1.0
 
-	terrain_outer_x = get_viewport().size.x * 1.2
-	terrain_outer_y = get_viewport().size.y
+	terrain_outer_x = get_viewport().size.x * 1.5
+	terrain_outer_y = get_viewport().size.y * 0.5
 
 	pos = 0
 	current_terrain2_config = -1
@@ -125,10 +116,12 @@ func init():
 			coin.queue_free()
 
 func set_origin(pos: int):
+	if abs(pos - self.pos) < terrain_update_threshold:
+		return
 	self.pos = pos
 	update()
 
-func _process(delta):
+func _on_CoinCleaner_timeout():
 	var coins = get_tree().get_nodes_in_group("coins")
 	var edge = pos - get_viewport().size.x * 2
 	var i = 0
@@ -159,7 +152,7 @@ func _draw():
 	var grassTopPoints = PoolVector2Array()
 	var grassBottomPoints = PoolVector2Array()
 	var w = get_viewport().size.x
-	var m = w + terrain_outer_x * 2
+	var m = w + terrain_outer_x
 	var h = get_viewport().size.y
 	var maxY = -h;
 

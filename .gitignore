@@ -1,0 +1,8 @@
+.github
+.idea
+.import
+/android/build/.gradle/
+/android/build/build/
+/android/build/libs/
+/android/build/assets/
+/android/plugins
