@@ -68,4 +68,8 @@ position = Vector2( 0.353561, 0.353546 )
 enabled = true
 cast_to = Vector2( 0, 200 )
 
+[node name="HeavyBoostTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
 [connection signal="body_entered" from="." to="." method="_on_Car_body_entered"]

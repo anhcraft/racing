@@ -48,7 +48,7 @@ func _ready():
 func _on_Car_moving():
 	if abs($Car.position.x - $Camera.position.x) >= 0.2 * width:
 		cameraVelocityX = $Car.position.x - $Camera.position.x
-		if cameraVelocityX > 0:
+		if cameraVelocityX > 0 && $Car/HeavyBoostTimer.is_stopped():
 			$"/root/Player".boost(abs($Car.position.x - $"/root/Player".position))
 		$"/root/Player".position = $Car.position.x
 		$Terrain.set_origin($"/root/Player".position)

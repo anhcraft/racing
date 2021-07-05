@@ -84,7 +84,7 @@ func init():
 	grassNoise.octaves = 5
 	grassNoise.period = 1.0
 
-	terrain_outer_x = get_viewport().size.x * 1.2
+	terrain_outer_x = get_viewport().size.x * 2
 	terrain_outer_y = get_viewport().size.y * 0.7
 
 	pos = 0

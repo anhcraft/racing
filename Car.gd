@@ -61,10 +61,13 @@ func go():
 
 	if !$LightBoostTimer.is_stopped() && $"/root/Player".energy == 100:
 		$"/root/Player".update_energy(0)
-		speed += car_ultra_boost_speed
+		$HeavyBoostTimer.start()
 	elif OS.get_time().second >= lastBoostTime + car_boost_cooldown:
 		lastBoostTime = OS.get_time().second
 		speed += car_boost_speed
+
+	if self.linear_velocity.length() < total_car_speed * 5 && !$HeavyBoostTimer.is_stopped():
+		speed += car_ultra_boost_speed
 
 	velocity = velocity.normalized() * speed
 	self.linear_velocity += velocity
