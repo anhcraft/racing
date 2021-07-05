@@ -8,6 +8,7 @@ export(Dictionary) var items = {
 	early_boost = 2000,
 	blue_skin = 8000,
 	pink_skin = 8000,
+	lime_skin = 8000,
 	resurrection = 20000,
 	resurrection2 = 50000,
 	more_coins = 5000,
@@ -22,6 +23,7 @@ func init():
 	initItem("early_boost", $ItemList/EarlyBoost/Price)
 	initItem("blue_skin", $ItemList/BlueCar/Price)
 	initItem("pink_skin", $ItemList/PinkCar/Price)
+	initItem("lime_skin", $ItemList/LimeCar/Price)
 	initItem("resurrection", $ItemList/Resurrection/Price)
 	initItem("resurrection2", $ItemList/Resurrection2/Price)
 	initItem("more_coins", $ItemList/MoreCoins/Price)

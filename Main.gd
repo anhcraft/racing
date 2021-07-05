@@ -4,7 +4,8 @@ export var camera_move_speed = 0.05
 export(Dictionary) var skin_icons = {
 	"red": Color8(227, 90, 90),
 	"blue": Color8(68, 154, 235),
-	"pink": Color8(177, 110, 235)
+	"pink": Color8(177, 110, 235),
+	"lime": Color8(87, 201, 34)
 };
 
 var width;
@@ -165,6 +166,8 @@ func _on_Skin_gui_input(event: InputEvent):
 			list.append("blue")
 		if items.has("pink_skin"):
 			list.append("pink")
+		if items.has("lime_skin"):
+			list.append("lime")
 		var ind = list.find($"/root/User".data.skin)
 		var new_ind = 0 if ind == list.size() - 1 else ind + 1
 		if ind != new_ind:

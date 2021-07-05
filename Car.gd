@@ -14,6 +14,7 @@ var total_car_speed = car_speed + car_boost_speed + car_ultra_boost_speed + car_
 const redSkin = preload("res://car_body.png")
 const blueSkin = preload("res://car_body_blue.png")
 const pinkSkin = preload("res://car_body_pink.png")
+const limeSkin = preload("res://car_body_lime.png")
 
 var lastBoostTime = 0
 var wheelRotate = 0
@@ -32,6 +33,8 @@ func update_skin():
 		$Body.texture = blueSkin
 	elif skin == "pink":
 		$Body.texture = pinkSkin
+	elif skin == "lime":
+		$Body.texture = limeSkin
 
 func boost():
 	if $LightBoostTimer.is_stopped():
