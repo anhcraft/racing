@@ -13,42 +13,22 @@ export(Array, Dictionary) var terrain2_config = [
 	{
 		min_height = 0,
 		max_height = 500,
-		from_range = 20000
+		from_range = 50000
 	},
 	{
 		min_height = 0,
 		max_height = 800,
-		from_range = 30000
+		from_range = 100000
 	},
 	{
 		min_height = 0,
 		max_height = 1200,
-		from_range = 40000
-	},
-	{
-		min_height = 500,
-		max_height = 2500,
-		from_range = 50000
-	},
-	{
-		min_height = 1000,
-		max_height = 5000,
-		from_range = 100000
-	},
-	{
-		min_height = 4000,
-		max_height = 8000,
 		from_range = 200000
 	},
 	{
-		min_height = 8000,
-		max_height = 12000,
+		min_height = 10,
+		max_height = 1800,
 		from_range = 500000
-	},
-	{
-		min_height = 10000,
-		max_height = 18000,
-		from_range = 1000000
 	}
 ];
 export var terrain_poly_size = 250;
