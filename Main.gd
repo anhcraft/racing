@@ -33,7 +33,6 @@ func _ready():
 	height = get_viewport().size.y
 
 	$Car.position.y -= 300
-	$Car.position.x = width * 0.5
 
 	$"/root/Player".connect("updateBalance", self, "_on_Balance_updated")
 	$"/root/Player".connect("updateEnergy", self, "_on_Energy_updated")
@@ -51,6 +50,7 @@ func _on_Car_moving():
 			$"/root/Player".boost(abs($Car.position.x - $"/root/Player".position))
 		$"/root/Player".position = $Car.position.x
 		$Terrain.set_origin($"/root/Player".position)
+		$HUD/DistanceText.text = str(int($"/root/Player".position))
 	if abs($Car.position.y - $Camera.position.y) >= 0.2 * height:
 		cameraVelocityY = $Car.position.y - $Camera.position.y
 
@@ -102,7 +102,7 @@ func _on_PlayBtn_button_down():
 	$Car.mode = RigidBody2D.MODE_KINEMATIC
 	$Car.rotation = 0
 	$Car.position.y = 0
-	$Car.position.x = width * 0.5
+	$Car.position.x = 0
 	$"/root/Player".position = $Car.position.x
 	$Camera.position.x = $Car.position.x # move back immediately
 	$Terrain.set_origin($Car.position.x)
