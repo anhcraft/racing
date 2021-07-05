@@ -65,6 +65,8 @@ func _on_Car_overturn():
 	var max_deaths = 1
 	if ($"/root/User".data.owned_items as Array).has("resurrection"):
 		max_deaths += 1
+	if ($"/root/User".data.owned_items as Array).has("resurrection2"):
+		max_deaths += 1
 	if $"/root/Player".deathCount >= max_deaths:
 		$DeathScreen/ContinueBtn.hide()
 

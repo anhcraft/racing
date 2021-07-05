@@ -72,28 +72,31 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ItemList" type="VBoxContainer" parent="."]
+[node name="ItemList" type="GridContainer" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -198.0
-margin_top = -247.0
-margin_right = 198.0
-margin_bottom = 267.0
+margin_left = -455.0
+margin_top = -257.0
+margin_right = 455.0
+margin_bottom = 257.0
+custom_constants/hseparation = 100
+columns = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="RapidRolling" type="HBoxContainer" parent="ItemList"]
-margin_right = 396.0
+margin_right = 407.0
 margin_bottom = 70.0
 custom_constants/separation = 50
 alignment = 1
 
 [node name="Name" type="Label" parent="ItemList/RapidRolling"]
+margin_left = 5.0
 margin_top = 14.0
-margin_right = 167.0
+margin_right = 172.0
 margin_bottom = 56.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -103,22 +106,22 @@ __meta__ = {
 }
 
 [node name="Price" type="TextureButton" parent="ItemList/RapidRolling"]
-margin_left = 217.0
-margin_right = 396.0
+margin_left = 222.0
+margin_right = 401.0
 margin_bottom = 70.0
 texture_normal = ExtResource( 4 )
 
 [node name="EarlyBoost" type="HBoxContainer" parent="ItemList"]
-margin_top = 74.0
-margin_right = 396.0
-margin_bottom = 144.0
+margin_left = 507.0
+margin_right = 921.0
+margin_bottom = 70.0
 custom_constants/separation = 50
 alignment = 1
 
 [node name="Name" type="Label" parent="ItemList/EarlyBoost"]
-margin_left = 10.0
+margin_left = 19.0
 margin_top = 14.0
-margin_right = 156.0
+margin_right = 165.0
 margin_bottom = 56.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -128,22 +131,22 @@ __meta__ = {
 }
 
 [node name="Price" type="TextureButton" parent="ItemList/EarlyBoost"]
-margin_left = 206.0
-margin_right = 385.0
+margin_left = 215.0
+margin_right = 394.0
 margin_bottom = 70.0
 texture_normal = ExtResource( 4 )
 
 [node name="BlueCar" type="HBoxContainer" parent="ItemList"]
-margin_top = 148.0
-margin_right = 396.0
-margin_bottom = 218.0
+margin_top = 74.0
+margin_right = 407.0
+margin_bottom = 144.0
 custom_constants/separation = 50
 alignment = 1
 
 [node name="Name" type="Label" parent="ItemList/BlueCar"]
-margin_left = 23.0
+margin_left = 29.0
 margin_top = 14.0
-margin_right = 143.0
+margin_right = 149.0
 margin_bottom = 56.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -153,22 +156,23 @@ __meta__ = {
 }
 
 [node name="Price" type="TextureButton" parent="ItemList/BlueCar"]
-margin_left = 193.0
-margin_right = 372.0
+margin_left = 199.0
+margin_right = 378.0
 margin_bottom = 70.0
 texture_normal = ExtResource( 4 )
 
 [node name="PinkCar" type="HBoxContainer" parent="ItemList"]
-margin_top = 222.0
-margin_right = 396.0
-margin_bottom = 292.0
+margin_left = 507.0
+margin_top = 74.0
+margin_right = 921.0
+margin_bottom = 144.0
 custom_constants/separation = 50
 alignment = 1
 
 [node name="Name" type="Label" parent="ItemList/PinkCar"]
-margin_left = 24.0
+margin_left = 33.0
 margin_top = 14.0
-margin_right = 142.0
+margin_right = 151.0
 margin_bottom = 56.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -178,47 +182,71 @@ __meta__ = {
 }
 
 [node name="Price" type="TextureButton" parent="ItemList/PinkCar"]
-margin_left = 192.0
-margin_right = 371.0
+margin_left = 201.0
+margin_right = 380.0
 margin_bottom = 70.0
 texture_normal = ExtResource( 4 )
 
 [node name="Resurrection" type="HBoxContainer" parent="ItemList"]
-margin_top = 296.0
-margin_right = 396.0
-margin_bottom = 366.0
+margin_top = 148.0
+margin_right = 407.0
+margin_bottom = 218.0
 custom_constants/separation = 50
 alignment = 1
 
 [node name="Name" type="Label" parent="ItemList/Resurrection"]
-margin_left = 2.0
 margin_top = 14.0
-margin_right = 164.0
+margin_right = 178.0
 margin_bottom = 56.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Resurrection"
+text = "Resurrection I"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Price" type="TextureButton" parent="ItemList/Resurrection"]
-margin_left = 214.0
-margin_right = 393.0
+margin_left = 228.0
+margin_right = 407.0
+margin_bottom = 70.0
+texture_normal = ExtResource( 4 )
+
+[node name="Resurrection2" type="HBoxContainer" parent="ItemList"]
+margin_left = 507.0
+margin_top = 148.0
+margin_right = 921.0
+margin_bottom = 218.0
+custom_constants/separation = 50
+alignment = 1
+
+[node name="Name" type="Label" parent="ItemList/Resurrection2"]
+margin_top = 14.0
+margin_right = 185.0
+margin_bottom = 56.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Resurrection II"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Price" type="TextureButton" parent="ItemList/Resurrection2"]
+margin_left = 235.0
+margin_right = 414.0
 margin_bottom = 70.0
 texture_normal = ExtResource( 4 )
 
 [node name="MoreCoins" type="HBoxContainer" parent="ItemList"]
-margin_top = 370.0
-margin_right = 396.0
-margin_bottom = 440.0
+margin_top = 222.0
+margin_right = 407.0
+margin_bottom = 292.0
 custom_constants/separation = 50
 alignment = 1
 
 [node name="Name" type="Label" parent="ItemList/MoreCoins"]
-margin_left = 12.0
+margin_left = 17.0
 margin_top = 14.0
-margin_right = 155.0
+margin_right = 160.0
 margin_bottom = 56.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -228,22 +256,23 @@ __meta__ = {
 }
 
 [node name="Price" type="TextureButton" parent="ItemList/MoreCoins"]
-margin_left = 205.0
-margin_right = 384.0
+margin_left = 210.0
+margin_right = 389.0
 margin_bottom = 70.0
 texture_normal = ExtResource( 4 )
 
 [node name="NightSky" type="HBoxContainer" parent="ItemList"]
-margin_top = 444.0
-margin_right = 396.0
-margin_bottom = 514.0
+margin_left = 507.0
+margin_top = 222.0
+margin_right = 921.0
+margin_bottom = 292.0
 custom_constants/separation = 50
 alignment = 1
 
 [node name="Name" type="Label" parent="ItemList/NightSky"]
-margin_left = 21.0
+margin_left = 30.0
 margin_top = 14.0
-margin_right = 146.0
+margin_right = 155.0
 margin_bottom = 56.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -253,8 +282,8 @@ __meta__ = {
 }
 
 [node name="Price" type="TextureButton" parent="ItemList/NightSky"]
-margin_left = 196.0
-margin_right = 375.0
+margin_left = 205.0
+margin_right = 384.0
 margin_bottom = 70.0
 texture_normal = ExtResource( 4 )
 
@@ -311,6 +340,7 @@ stream = ExtResource( 6 )
 [connection signal="button_down" from="ItemList/BlueCar/Price" to="." method="_on_Price_button_down" binds= [ "blue_skin" ]]
 [connection signal="button_down" from="ItemList/PinkCar/Price" to="." method="_on_Price_button_down" binds= [ "pink_skin" ]]
 [connection signal="button_down" from="ItemList/Resurrection/Price" to="." method="_on_Price_button_down" binds= [ "resurrection" ]]
+[connection signal="button_down" from="ItemList/Resurrection2/Price" to="." method="_on_Price_button_down" binds= [ "resurrection2" ]]
 [connection signal="button_down" from="ItemList/MoreCoins/Price" to="." method="_on_Price_button_down" binds= [ "more_coins" ]]
 [connection signal="button_down" from="ItemList/NightSky/Price" to="." method="_on_Price_button_down" binds= [ "night_sky" ]]
 [connection signal="confirmed" from="OrderConfirm" to="." method="_on_OrderConfirm_confirmed"]
