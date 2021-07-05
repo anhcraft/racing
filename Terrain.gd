@@ -120,8 +120,8 @@ func init():
 		if coin is Area2D:
 			coin.queue_free()
 
-func set_origin(pos: int):
-	if abs(pos - self.pos) < terrain_update_threshold:
+func set_origin(pos: int, force: bool = false):
+	if !force && abs(pos - self.pos) < terrain_update_threshold:
 		return
 	self.pos = pos
 	update()
@@ -172,12 +172,12 @@ func _draw():
 				d -= t2["min_height"] + ((terrain2Noise.get_noise_1d(x) + 1) * 0.5) * (t2["max_height"] - t2["min_height"])
 			last_y = h - d
 			maxY = max(maxY, last_y)
-			groundPoints.push_back(Vector2(x, h - d))
+			groundPoints.push_back(Vector2(x, 0 if x < 0 else h - d))
 
-			grassBottomPoints.push_back(Vector2(x, h - d))
+			grassBottomPoints.push_back(Vector2(x, 0 if x < 0 else h - d))
 			var g = (grassNoise.get_noise_1d(x) + 1) * 0.5
-			d += grass_height_min + g * (grass_height_max - grass_height_min)
-			grassTopPoints.insert(0, Vector2(x, h - d))
+			var d0 = grass_height_min + g * (grass_height_max - grass_height_min)
+			grassTopPoints.insert(0, Vector2(x, (0 if x < 0 else h - d) + d0))
 
 		if x % coin_spawn_step == 0:
 			var name = str(x);

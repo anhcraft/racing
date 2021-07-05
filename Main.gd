@@ -1,6 +1,6 @@
 extends Node2D
 
-export var camera_move_speed = 0.05
+export var camera_move_speed = 0.05 
 export(Dictionary) var skin_icons = {
 	"red": Color8(227, 90, 90),
 	"blue": Color8(68, 154, 235),
@@ -32,6 +32,7 @@ func _ready():
 	width = get_viewport().size.x
 	height = get_viewport().size.y
 
+	$Car.position.x = 0
 	$Car.position.y -= 300
 
 	$"/root/Player".connect("updateBalance", self, "_on_Balance_updated")
@@ -105,7 +106,7 @@ func _on_PlayBtn_button_down():
 	$Car.position.x = 0
 	$"/root/Player".position = $Car.position.x
 	$Camera.position.x = $Car.position.x # move back immediately
-	$Terrain.set_origin($Car.position.x)
+	$Terrain.set_origin($Car.position.x, true)
 	yield(get_tree().create_timer(0.1), "timeout")
 	$"/root/Player".stopped = false
 	$Car.mode = RigidBody2D.MODE_RIGID
