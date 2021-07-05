@@ -33,6 +33,7 @@ func _ready():
 	height = get_viewport().size.y
 
 	$Car.position.x = 0
+	$HUD/DistanceText.text = str($Car.position.x)
 	$Car.position.y -= 300
 
 	$"/root/Player".connect("updateBalance", self, "_on_Balance_updated")
