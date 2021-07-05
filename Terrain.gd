@@ -37,6 +37,8 @@ export var grass_height_min = 0;
 export var grass_height_max = 30;
 
 export var def_coin_spawn_step = 30;
+export var coin_spawn_step_1 = 18;
+export var coin_spawn_step_2 = 10;
 export(Array, Dictionary) var coin_config = [
 	{
 		chance = 0.2,
@@ -93,8 +95,10 @@ func init():
 
 	coin_spawn_step = def_coin_spawn_step
 	if ($"/root/User".data.owned_items as Array).has("more_coins"):
-		coin_spawn_step /= 2
-	
+		coin_spawn_step = coin_spawn_step_1
+	if ($"/root/User".data.owned_items as Array).has("more_coins2"):
+		coin_spawn_step = coin_spawn_step_2
+
 	var coins = get_tree().get_nodes_in_group("coins")
 	for coin in coins:
 		if coin is Area2D:

@@ -11,6 +11,7 @@ export(Dictionary) var items = {
 	resurrection = 20000,
 	resurrection2 = 50000,
 	more_coins = 5000,
+	more_coins2 = 30000,
 	night_sky = 10000
 };
 
@@ -24,6 +25,7 @@ func init():
 	initItem("resurrection", $ItemList/Resurrection/Price)
 	initItem("resurrection2", $ItemList/Resurrection2/Price)
 	initItem("more_coins", $ItemList/MoreCoins/Price)
+	initItem("more_coins2", $ItemList/MoreCoins2/Price)
 	initItem("night_sky", $ItemList/NightSky/Price)
 	$Balance.text = "%d coins" % $"/root/User".data.balance
 	$OrderConfirm.hide()
