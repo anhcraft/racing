@@ -1,34 +1,37 @@
 extends Node2D
 
 export var terrain_update_threshold = 50;
-export var terrain_height_min = 10;
-export var terrain_height_max = 300;
-export(Array, Dictionary) var terrain2_config = [
+export(Array, Dictionary) var terrain_config = [
 	# WARNING: must be ordered by `from_range` from LOWEST to HIGHEST
 	{
 		min_height = 0,
+		max_height = 100,
+		from_range = 1000
+	},
+	{
+		min_height = 0,
 		max_height = 300,
+		from_range = 5000
+	},
+	{
+		min_height = 5,
+		max_height = 500,
 		from_range = 10000
 	},
 	{
-		min_height = 0,
-		max_height = 500,
+		min_height = 10,
+		max_height = 800,
+		from_range = 20000
+	},
+	{
+		min_height = 15,
+		max_height = 1200,
 		from_range = 50000
 	},
 	{
-		min_height = 0,
-		max_height = 800,
-		from_range = 100000
-	},
-	{
-		min_height = 0,
-		max_height = 1200,
-		from_range = 200000
-	},
-	{
-		min_height = 10,
+		min_height = 20,
 		max_height = 1800,
-		from_range = 500000
+		from_range = 100000
 	}
 ];
 export var terrain_poly_size = 250;
@@ -58,12 +61,11 @@ const specialCoinScene = preload("res://SpecialCoin.tscn")
 const groundTxt = preload("res://ground.png")
 
 var terrainNoise: OpenSimplexNoise;
-var terrain2Noise: OpenSimplexNoise;
 var grassNoise: OpenSimplexNoise;
 var pos: int;
 var terrain_outer_x: int;
 var terrain_outer_y: int;
-var current_terrain2_config: int;
+var current_terrain_config: int;
 var generatedCoins = {};
 var coin_spawn_step = def_coin_spawn_step;
 
@@ -73,15 +75,9 @@ func _ready():
 func init():
 	terrainNoise = OpenSimplexNoise.new()
 	terrainNoise.seed = randi()
-	terrainNoise.octaves = 2
-	terrainNoise.period = 500.0
-	terrainNoise.persistence = 0.6
-
-	terrain2Noise = OpenSimplexNoise.new()
-	terrain2Noise.seed = randi()
-	terrain2Noise.octaves = 3
-	terrain2Noise.period = 1000.0
-	terrain2Noise.persistence = 0.2
+	terrainNoise.octaves = 3
+	terrainNoise.period = 1000.0
+	terrainNoise.persistence = 0.2
 
 	grassNoise = OpenSimplexNoise.new()
 	grassNoise.seed = randi()
@@ -92,7 +88,7 @@ func init():
 	terrain_outer_y = get_viewport().size.y * 0.7
 
 	pos = 0
-	current_terrain2_config = -1
+	current_terrain_config = -1
 	generatedCoins = {}
 
 	coin_spawn_step = def_coin_spawn_step
@@ -122,21 +118,21 @@ func _on_CoinCleaner_timeout():
 				generatedCoins.erase(coin.name)
 				coin.queue_free()
 
-func get_terrain2_config(x: int):
+func get_terrain_config(x: int):
 	# To improve performance, we will cache the current terrain state
-	if current_terrain2_config + 1 < terrain2_config.size():
-		if x >= terrain2_config[current_terrain2_config + 1]["from_range"]:
-			current_terrain2_config += 1
+	if current_terrain_config + 1 < terrain_config.size():
+		if x >= terrain_config[current_terrain_config + 1]["from_range"]:
+			current_terrain_config += 1
 
-	if current_terrain2_config == -1:
+	if current_terrain_config == -1:
 		return null
 
 	# However, in a frame, it is possible to have two states at the same time
 	# so we need to manually check for the previous state
-	if x < terrain2_config[current_terrain2_config]["from_range"]:
-		return null if current_terrain2_config == 0 else terrain2_config[current_terrain2_config - 1]
+	if x < terrain_config[current_terrain_config]["from_range"]:
+		return null if current_terrain_config == 0 else terrain_config[current_terrain_config - 1]
 
-	return terrain2_config[current_terrain2_config]
+	return terrain_config[current_terrain_config]
 
 func _draw():
 	var groundPoints = PoolVector2Array()
@@ -152,10 +148,10 @@ func _draw():
 		var x = n - terrain_outer_x + pos
 
 		if x % terrain_poly_size == 0:
-			var d = terrain_height_min + ((terrainNoise.get_noise_1d(x) + 1) * 0.5) * (terrain_height_max - terrain_height_min)
-			var t2 = get_terrain2_config(x)
-			if t2 != null:
-				d -= t2["min_height"] + ((terrain2Noise.get_noise_1d(x) + 1) * 0.5) * (t2["max_height"] - t2["min_height"])
+			var d = 0
+			var t = get_terrain_config(x)
+			if t != null:
+				d -= t["min_height"] + ((terrainNoise.get_noise_1d(x) + 1) * 0.5) * (t["max_height"] - t["min_height"])
 			last_y = h - d
 			maxY = max(maxY, last_y)
 			groundPoints.push_back(Vector2(x, 0 if x < 0 else h - d))
