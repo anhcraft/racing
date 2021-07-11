@@ -228,24 +228,28 @@ __meta__ = {
 }
 
 [node name="StoreBtn" type="TextureButton" parent="MainScreen"]
-anchor_left = 0.852
-anchor_top = 0.75
+anchor_left = 1.0
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = -105.0
-margin_bottom = 2.0
+margin_left = -185.0
+margin_top = -182.0
+margin_right = -36.0
+margin_bottom = -33.0
 texture_normal = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Skin" type="ColorRect" parent="MainScreen"]
-anchor_left = 0.87
-anchor_top = 0.6
-anchor_right = 0.88
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = 87.2
-margin_bottom = -200.0
+margin_left = -163.0
+margin_top = -306.0
+margin_right = -63.0
+margin_bottom = -206.0
 color = Color( 0.890196, 0.352941, 0.352941, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -257,9 +261,20 @@ anchor_bottom = 1.0
 margin_left = 70.6353
 margin_top = -180.136
 margin_right = 198.635
-margin_bottom = -52.1356
+margin_bottom = -52.136
 rect_scale = Vector2( 0.8, 0.8 )
 texture_normal = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Theme" type="ColorRect" parent="MainScreen"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 70.635
+margin_top = -303.0
+margin_right = 170.635
+margin_bottom = -203.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -303,5 +318,6 @@ autoplay = true
 [connection signal="button_down" from="MainScreen/StoreBtn" to="." method="_on_StoreBtn_button_down"]
 [connection signal="gui_input" from="MainScreen/Skin" to="." method="_on_Skin_gui_input"]
 [connection signal="button_down" from="MainScreen/SkyButton" to="." method="_on_SkyButton_button_down"]
+[connection signal="gui_input" from="MainScreen/Theme" to="." method="_on_Theme_gui_input"]
 [connection signal="timeout" from="DataSaveTask" to="." method="_on_DataSaveTask_timeout"]
 [connection signal="timeout" from="MainLoop" to="." method="_on_MainLoop_timeout"]

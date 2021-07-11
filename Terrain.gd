@@ -53,11 +53,23 @@ export(Array, Dictionary) var coin_config = [
 		special = true
 	}
 ];
-export var groundTxtScale = 2;
+export(Dictionary) var theme_config = {
+	"default": {
+		ground = "ground",
+		ground_scale = 2,
+		grass = true
+	},
+	"desert": {
+		ground = "dune",
+		ground_scale = 0.1,
+		grass = false
+	}
+};
 
 const coinScene = preload("res://Coin.tscn")
 const specialCoinScene = preload("res://SpecialCoin.tscn")
 const groundTxt = preload("res://ground.png")
+const duneTxt = preload("res://dune.png")
 
 var terrainNoise: OpenSimplexNoise;
 var grassNoise: OpenSimplexNoise;
@@ -138,7 +150,14 @@ func get_terrain_config(x: int):
 
 	return terrain_config[current_terrain_config]
 
+func getGroundTexture(n):
+	if n == "dune":
+		return duneTxt;
+	return groundTxt	
+
 func _draw():
+	var themeConf = theme_config[$"/root/User".data.theme];
+	var groundTxt = getGroundTexture(themeConf.ground);
 	var groundPoints = PoolVector2Array()
 	var grassTopPoints = PoolVector2Array()
 	var grassBottomPoints = PoolVector2Array()
@@ -176,25 +195,27 @@ func _draw():
 						coin.name = name;
 						coin.position = Vector2(x, last_y - (grass_height_max + c["offset"]))
 						add_child(coin)
-
+	
+	(material as ShaderMaterial).set_shader_param("overlay", 0 if themeConf.ground == "ground" else 1)
 	groundPoints.push_back(Vector2(x0 + m, maxY + terrain_outer_y))
 	groundPoints.push_back(Vector2(x0, maxY + terrain_outer_y))
 	var groundUV = PoolVector2Array();
 	for k in groundPoints:
 		groundUV.append(Vector2(
-			k.x / groundTxt.get_width() * groundTxtScale, 
-			k.y / groundTxt.get_height() * groundTxtScale
+			k.x / groundTxt.get_width() * themeConf.ground_scale, 
+			k.y / groundTxt.get_height() * themeConf.ground_scale
 		));
 	draw_polygon(groundPoints, PoolColorArray(), groundUV, groundTxt)
 
-	var grassPoints = PoolVector2Array(grassTopPoints)
-	grassPoints.append_array(grassBottomPoints)
-	var grassUV = PoolVector2Array();
-	for k in grassPoints:
-		grassUV.append(Vector2(
-			k.x / groundTxt.get_width() * groundTxtScale, 
-			k.y / groundTxt.get_height() * groundTxtScale
-		));
-	draw_polygon(grassPoints, PoolColorArray([Color(0, 0, 0, 1)]), grassUV)
+	if themeConf.grass:
+		var grassPoints = PoolVector2Array(grassTopPoints)
+		grassPoints.append_array(grassBottomPoints)
+		var grassUV = PoolVector2Array();
+		for k in grassPoints:
+			grassUV.append(Vector2(
+				k.x / groundTxt.get_width() * themeConf.ground_scale, 
+				k.y / groundTxt.get_height() * themeConf.ground_scale
+			));
+		draw_polygon(grassPoints, PoolColorArray([Color(0, 0, 0, 1)]), grassUV)
 
 	$StaticBody2D/Collision.set_polygon(groundPoints)

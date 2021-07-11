@@ -5,6 +5,7 @@
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
 render_mode unshaded;
+uniform int overlay;
 
 vec2 random(vec2 uv){
     uv = vec2( dot(uv, vec2(127.1,311.7) ),
@@ -29,9 +30,11 @@ void fragment() {
 		COLOR = vec4(61, 130, 48, 255.0) / 255.0;
 	} else {
 		COLOR = texture(TEXTURE, UV);
-		float n = noise(UV * 10.0);
-		if (n < 0.5) {
-			COLOR = mix(COLOR, vec4(0, 0, 0, 1), 0.1);
+		if (overlay == 0) {
+			float n = noise(UV * 10.0);
+			if (n < 0.5) {
+				COLOR = mix(COLOR, vec4(0, 0, 0, 1), 0.1);
+			}
 		}
 	}
 }
@@ -39,6 +42,7 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )
+shader_param/overlay = null
 
 [sub_resource type="PhysicsMaterial" id=3]
 friction = 0.0

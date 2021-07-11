@@ -7,6 +7,10 @@ export(Dictionary) var skin_icons = {
 	"pink": Color8(177, 110, 235),
 	"lime": Color8(87, 201, 34)
 };
+export(Dictionary) var theme_icons = {
+	"default": Color8(108, 186, 69),
+	"desert": Color8(218, 222, 106)
+};
 
 var width;
 var height;
@@ -41,6 +45,7 @@ func _ready():
 	$"/root/Player".connect("updateEnergy", self, "_on_Energy_updated")
 	$"/root/Player".init()
 	$MainScreen/Skin.color = skin_icons[$"/root/User".data.skin]
+	$MainScreen/Theme.color = theme_icons[$"/root/User".data.theme]
 	$Car.update_skin()
 	$Sky.set_night($"/root/User".data.night)
 	if !$"/root/User".data.night:
@@ -199,3 +204,14 @@ func _on_SkyButton_button_down():
 			$NightLayer/NightOverlay.show()
 		else:
 			$NightLayer/NightOverlay.hide()
+
+func _on_Theme_gui_input(event: InputEvent):
+	if event is InputEventMouseButton && event.is_pressed():
+		var list = ["default", "desert"];
+		var ind = list.find($"/root/User".data.theme)
+		var new_ind = 0 if ind == list.size() - 1 else ind + 1
+		if ind != new_ind:
+			$"/root/User".data.theme = list[new_ind]
+			$"/root/User".save_game()
+			$MainScreen/Theme.color = theme_icons[$"/root/User".data.theme]
+			$Terrain.update()

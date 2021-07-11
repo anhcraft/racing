@@ -2,6 +2,7 @@ extends Node
 
 var data = {
 	skin = "red",
+	theme = "default",
 	balance = 0,
 	owned_items = [],
 	night = false
