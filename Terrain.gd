@@ -51,9 +51,11 @@ export(Array, Dictionary) var coin_config = [
 		special = true
 	}
 ];
+export var groundTxtScale = 2;
 
 const coinScene = preload("res://Coin.tscn")
 const specialCoinScene = preload("res://SpecialCoin.tscn")
+const groundTxt = preload("res://ground.png")
 
 var terrainNoise: OpenSimplexNoise;
 var terrain2Noise: OpenSimplexNoise;
@@ -176,7 +178,11 @@ func _draw():
 
 	groundPoints.push_back(Vector2(pos + w + terrain_outer_x, maxY + terrain_outer_y))
 	groundPoints.push_back(Vector2(pos - terrain_outer_x, maxY + terrain_outer_y))
-	draw_polygon(groundPoints, PoolColorArray([Color8(153, 110, 11)]))
+	var uv = PoolVector2Array();
+	for k in groundPoints:
+		var v = Vector2(k.x / groundTxt.get_width() * groundTxtScale, k.y / groundTxt.get_height() * groundTxtScale);
+		uv.append(v);
+	draw_polygon(groundPoints, PoolColorArray(), uv, groundTxt)
 
 	var grassPoints = PoolVector2Array(grassTopPoints)
 	grassPoints.append_array(grassBottomPoints)
