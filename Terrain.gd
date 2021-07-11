@@ -178,14 +178,22 @@ func _draw():
 
 	groundPoints.push_back(Vector2(pos + w + terrain_outer_x, maxY + terrain_outer_y))
 	groundPoints.push_back(Vector2(pos - terrain_outer_x, maxY + terrain_outer_y))
-	var uv = PoolVector2Array();
+	var groundUV = PoolVector2Array();
 	for k in groundPoints:
-		var v = Vector2(k.x / groundTxt.get_width() * groundTxtScale, k.y / groundTxt.get_height() * groundTxtScale);
-		uv.append(v);
-	draw_polygon(groundPoints, PoolColorArray(), uv, groundTxt)
+		groundUV.append(Vector2(
+			k.x / groundTxt.get_width() * groundTxtScale, 
+			k.y / groundTxt.get_height() * groundTxtScale
+		));
+	draw_polygon(groundPoints, PoolColorArray(), groundUV, groundTxt)
 
 	var grassPoints = PoolVector2Array(grassTopPoints)
 	grassPoints.append_array(grassBottomPoints)
-	draw_polygon(grassPoints, PoolColorArray([Color8(90, 173, 93)]))
+	var grassUV = PoolVector2Array();
+	for k in grassPoints:
+		grassUV.append(Vector2(
+			k.x / groundTxt.get_width() * groundTxtScale, 
+			k.y / groundTxt.get_height() * groundTxtScale
+		));
+	draw_polygon(grassPoints, PoolColorArray([Color(0, 0, 0, 1)]), grassUV)
 
 	$StaticBody2D/Collision.set_polygon(groundPoints)

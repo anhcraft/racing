@@ -14,27 +14,27 @@
 [ext_resource path="res://bgm.wav" type="AudioStream" id=12]
 [ext_resource path="res://sky_btn.png" type="Texture" id=13]
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=1]
 size = 40
 font_data = ExtResource( 5 )
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=2]
 size = 30
 font_data = ExtResource( 5 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=3]
 size = 100
 font_data = ExtResource( 5 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=4]
 size = 36
 font_data = ExtResource( 5 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=5]
 size = 120
 font_data = ExtResource( 7 )
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=6]
 size = 32
 font_data = ExtResource( 7 )
 
@@ -71,7 +71,7 @@ anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -726.0
 margin_bottom = 65.0
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 1 )
 align = 2
 valign = 1
 clip_text = true
@@ -85,7 +85,7 @@ anchor_right = 1.0
 margin_left = -373.0
 margin_top = 55.0
 margin_bottom = 149.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 2 )
 align = 2
 clip_text = true
 __meta__ = {
@@ -149,7 +149,7 @@ anchor_right = 1.0
 anchor_bottom = 0.5
 margin_top = -153.0
 margin_bottom = -23.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 3 )
 text = "CRASHED"
 align = 1
 valign = 1
@@ -166,7 +166,7 @@ margin_left = -75.5
 margin_top = 49.3776
 margin_right = 75.5
 margin_bottom = 102.378
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 text = "Continue"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -181,7 +181,7 @@ margin_left = -110.5
 margin_top = 121.5
 margin_right = 110.5
 margin_bottom = 174.5
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 text = "Back to menu"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -204,7 +204,7 @@ anchor_right = 1.0
 anchor_bottom = 0.5
 margin_top = -156.0
 margin_bottom = -2.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 text = "GO RACING!"
 align = 1
 valign = 1
@@ -221,7 +221,7 @@ margin_left = -75.5
 margin_top = 49.3776
 margin_right = 75.5
 margin_bottom = 102.378
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 text = "Play"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -279,7 +279,7 @@ margin_left = 16.0
 margin_top = 14.0
 margin_right = 74.0
 margin_bottom = 56.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

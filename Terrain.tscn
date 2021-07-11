@@ -1,11 +1,53 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Terrain.gd" type="Script" id=1]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+render_mode unshaded;
+const vec4 grass_color = vec4(0.0, 112.0, 36.0, 255.0) / 255.0;
+const vec4 overlay = vec4(145.0, 209.0, 36.0, 255.0) / 255.0;
+		
+vec2 random(vec2 uv){
+    uv = vec2( dot(uv, vec2(127.1,311.7) ),
+               dot(uv, vec2(269.5,183.3) ) );
+    return -1.0 + 2.0 * fract(sin(uv) * 43758.5453123);
+}
+
+float noise(vec2 uv) {
+    vec2 uv_index = floor(uv);
+    vec2 uv_fract = fract(uv);
+
+    vec2 blur = smoothstep(0.0, 1.0, uv_fract);
+
+    return mix( mix( dot( random(uv_index + vec2(0.0,0.0) ), uv_fract - vec2(0.0,0.0) ),
+                     dot( random(uv_index + vec2(1.0,0.0) ), uv_fract - vec2(1.0,0.0) ), blur.x),
+                mix( dot( random(uv_index + vec2(0.0,1.0) ), uv_fract - vec2(0.0,1.0) ),
+                     dot( random(uv_index + vec2(1.0,1.0) ), uv_fract - vec2(1.0,1.0) ), blur.x), blur.y) * 0.5 + 0.5;
+}
+
+void fragment() {
+	if (COLOR.x == 0.0) {
+		float n = noise(UV * 10.0);
+		COLOR = mix(grass_color, overlay, n * 0.5);
+	} else {
+		COLOR = texture(TEXTURE, UV);
+		float n = noise(UV * 10.0);
+		if (n < 0.5) {
+			COLOR = mix(COLOR, vec4(0, 0, 0, 1), 0.1);
+		}
+	}
+}
+"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
 
 [sub_resource type="PhysicsMaterial" id=3]
 friction = 0.0
 
 [node name="Terrain" type="Node2D"]
+material = SubResource( 2 )
 position = Vector2( -1.18919, -1.18921 )
 script = ExtResource( 1 )
 
