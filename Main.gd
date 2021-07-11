@@ -47,14 +47,14 @@ func _ready():
 		$NightLayer/NightOverlay.hide()
 
 func _on_Car_moving():
-	if abs($Car.position.x - $Camera.position.x) >= 0.2 * width:
+	if abs($Car.position.x - $Camera.position.x) >= 0.1 * width:
 		cameraVelocityX = $Car.position.x - $Camera.position.x
 		if cameraVelocityX > 0 && $Car/HeavyBoostTimer.is_stopped():
 			$"/root/Player".boost(abs($Car.position.x - $"/root/Player".position.x))
 		$"/root/Player".position = $Car.position
 		$Terrain.set_origin($"/root/Player".position.x)
 		$HUD/DistanceText.text = str(int($"/root/Player".position.x))
-	if abs($Car.position.y - $Camera.position.y) >= 0.2 * height:
+	if abs($Car.position.y - $Camera.position.y) >= 0.1 * height:
 		cameraVelocityY = $Car.position.y - $Camera.position.y
 
 func _on_Car_overturn():
