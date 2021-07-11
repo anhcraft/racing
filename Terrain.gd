@@ -1,6 +1,5 @@
 extends Node2D
 
-export var terrain_update_threshold = 50;
 export(Array, Dictionary) var terrain_config = [
 	# WARNING: must be ordered by `from_range` from LOWEST to HIGHEST
 	{
@@ -63,6 +62,7 @@ const groundTxt = preload("res://ground.png")
 var terrainNoise: OpenSimplexNoise;
 var grassNoise: OpenSimplexNoise;
 var pos: int;
+var terrain_update_threshold: float;
 var terrain_outer_x: int;
 var terrain_outer_y: int;
 var current_terrain_config: int;
@@ -86,6 +86,8 @@ func init():
 
 	terrain_outer_x = get_viewport().size.x * 2
 	terrain_outer_y = get_viewport().size.y * 0.7
+
+	terrain_update_threshold = get_viewport().size.x * 0.5
 
 	pos = 0
 	current_terrain_config = -1
