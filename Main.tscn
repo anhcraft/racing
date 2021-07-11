@@ -42,8 +42,8 @@ font_data = ExtResource( 7 )
 script = ExtResource( 3 )
 
 [node name="Sky" parent="." instance=ExtResource( 2 )]
-position = Vector2( 0, -3.46359 )
 scale = Vector2( 2, 2 )
+transform = Transform2D( 2, 0, 0, 2, 0, 0 )
 
 [node name="Car" parent="." instance=ExtResource( 4 )]
 

@@ -50,10 +50,10 @@ func _on_Car_moving():
 	if abs($Car.position.x - $Camera.position.x) >= 0.2 * width:
 		cameraVelocityX = $Car.position.x - $Camera.position.x
 		if cameraVelocityX > 0 && $Car/HeavyBoostTimer.is_stopped():
-			$"/root/Player".boost(abs($Car.position.x - $"/root/Player".position))
-		$"/root/Player".position = $Car.position.x
-		$Terrain.set_origin($"/root/Player".position)
-		$HUD/DistanceText.text = str(int($"/root/Player".position))
+			$"/root/Player".boost(abs($Car.position.x - $"/root/Player".position.x))
+		$"/root/Player".position = $Car.position
+		$Terrain.set_origin($"/root/Player".position.x)
+		$HUD/DistanceText.text = str(int($"/root/Player".position.x))
 	if abs($Car.position.y - $Camera.position.y) >= 0.2 * height:
 		cameraVelocityY = $Car.position.y - $Camera.position.y
 
@@ -88,7 +88,6 @@ func _process(delta):
 		if cameraVelocityY < 0:
 			$Camera.position.y -= speed
 			cameraVelocityY = min(cameraVelocityY + speed, 0)
-	$Sky.set_origin($Camera.position.x)
 
 func _on_Balance_updated(balance):
 	$HUD/BalanceText.text = str(balance) + " "
@@ -108,7 +107,7 @@ func _on_PlayBtn_button_down():
 	$Car.rotation = 0
 	$Car.position.y = 0
 	$Car.position.x = 0
-	$"/root/Player".position = $Car.position.x
+	$"/root/Player".position = $Car.position
 	$Camera.position.x = $Car.position.x # move back immediately
 	$Terrain.set_origin($Car.position.x, true)
 	yield(get_tree().create_timer(0.1), "timeout")
@@ -127,7 +126,7 @@ func _on_ContinueBtn_button_down():
 	$Car.mode = RigidBody2D.MODE_KINEMATIC
 	$Car.rotation = 0
 	$Car.position.y -= 300
-	$"/root/Player".position = $Car.position.x
+	$"/root/Player".position = $Car.position
 	yield(get_tree().create_timer(0.1), "timeout")
 	$"/root/Player".stopped = false
 	$Car.mode = RigidBody2D.MODE_RIGID

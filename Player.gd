@@ -6,7 +6,7 @@ signal updateBalance
 signal updateEnergy
 
 var balance;
-var position = 0;
+var position: Vector2 = Vector2(0, 0);
 var energy;
 var stopped = false;
 var deathCount = 0;
