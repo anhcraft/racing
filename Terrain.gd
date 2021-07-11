@@ -63,7 +63,8 @@ var terrainNoise: OpenSimplexNoise;
 var grassNoise: OpenSimplexNoise;
 var pos: int;
 var terrain_update_threshold: float;
-var terrain_outer_x: int;
+var terrain_outer_x1: int;
+var terrain_outer_x2: int;
 var terrain_outer_y: int;
 var current_terrain_config: int;
 var generatedCoins = {};
@@ -84,7 +85,8 @@ func init():
 	grassNoise.octaves = 5
 	grassNoise.period = 1.0
 
-	terrain_outer_x = get_viewport().size.x * 2
+	terrain_outer_x1 = get_viewport().size.x * 2
+	terrain_outer_x2 = get_viewport().size.x * 0.5
 	terrain_outer_y = get_viewport().size.y * 0.7
 
 	terrain_update_threshold = get_viewport().size.x * 0.5
@@ -141,13 +143,14 @@ func _draw():
 	var grassTopPoints = PoolVector2Array()
 	var grassBottomPoints = PoolVector2Array()
 	var w = get_viewport().size.x
-	var m = w + terrain_outer_x
+	var m = terrain_outer_x1 + w + terrain_outer_x2
 	var h = get_viewport().size.y
 	var maxY = -h;
 	var last_y = 0
 
+	var x0 = pos - terrain_outer_x1
 	for n in m:
-		var x = n - terrain_outer_x + pos
+		var x = x0 + n
 
 		if x % terrain_poly_size == 0:
 			var d = 0
@@ -174,8 +177,8 @@ func _draw():
 						coin.position = Vector2(x, last_y - (grass_height_max + c["offset"]))
 						add_child(coin)
 
-	groundPoints.push_back(Vector2(pos + w + terrain_outer_x, maxY + terrain_outer_y))
-	groundPoints.push_back(Vector2(pos - terrain_outer_x, maxY + terrain_outer_y))
+	groundPoints.push_back(Vector2(x0 + m, maxY + terrain_outer_y))
+	groundPoints.push_back(Vector2(x0, maxY + terrain_outer_y))
 	var groundUV = PoolVector2Array();
 	for k in groundPoints:
 		groundUV.append(Vector2(
