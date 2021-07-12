@@ -36,7 +36,7 @@ export(Array, Dictionary) var terrain_config = [
 export var terrain_poly_size = 250;
 
 export var grass_height_min = 0;
-export var grass_height_max = 30;
+export var grass_height_max = 20;
 
 export var def_coin_spawn_step = 30;
 export var coin_spawn_step_1 = 18;
@@ -83,7 +83,6 @@ const duneTxt = preload("res://dune.png")
 const cactusTxt = preload("res://cactus.png")
 
 var terrainNoise: OpenSimplexNoise;
-var grassNoise: OpenSimplexNoise;
 var pos: int;
 var terrain_update_threshold: float;
 var terrain_outer_x1: int;
@@ -103,11 +102,6 @@ func init():
 	terrainNoise.octaves = 3
 	terrainNoise.period = 1000.0
 	terrainNoise.persistence = 0.2
-
-	grassNoise = OpenSimplexNoise.new()
-	grassNoise.seed = randi()
-	grassNoise.octaves = 5
-	grassNoise.period = 1.0
 
 	terrain_outer_x1 = get_viewport().size.x * 2
 	terrain_outer_x2 = get_viewport().size.x * 0.5
@@ -209,10 +203,11 @@ func _draw():
 			maxY = max(maxY, last_y)
 			groundPoints.push_back(Vector2(x, 0 if x < 0 else h - d))
 
-			grassBottomPoints.push_back(Vector2(x, 0 if x < 0 else h - d))
-			var g = (grassNoise.get_noise_1d(x) + 1) * 0.5
-			var d0 = grass_height_min + g * (grass_height_max - grass_height_min)
-			grassTopPoints.insert(0, Vector2(x, (0 if x < 0 else h - d) + d0))
+			if themeConf.grass:
+				grassBottomPoints.push_back(Vector2(x, 0 if x < 0 else h - d))
+				var g = (sin(x * x + 3 * x) + 1) * 0.5
+				var d0 = grass_height_min + g * (grass_height_max - grass_height_min)
+				grassTopPoints.insert(0, Vector2(x, (0 if x < 0 else h - d) + d0))
 
 			if themeConf.decoration != null && x > 0:
 				var name = str(x);
