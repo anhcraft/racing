@@ -214,4 +214,5 @@ func _on_Theme_gui_input(event: InputEvent):
 			$"/root/User".data.theme = list[new_ind]
 			$"/root/User".save_game()
 			$MainScreen/Theme.color = theme_icons[$"/root/User".data.theme]
+			$Terrain.clear_decoration()
 			$Terrain.update()

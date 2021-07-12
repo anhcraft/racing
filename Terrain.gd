@@ -124,10 +124,14 @@ func init():
 		if coin is Area2D:
 			coin.queue_free()
 
+	clear_decoration();
+
+func clear_decoration():
+	generatedDecoration.clear();
 	var ds = get_tree().get_nodes_in_group("decoration")
 	for dec in ds:
-		if dec is Area2D:
-			dec.queue_free()	
+		if dec is Sprite:
+			dec.queue_free()
 
 func set_origin(pos: int, force: bool = false):
 	if !force && abs(pos - self.pos) < terrain_update_threshold:
@@ -147,7 +151,7 @@ func _on_Cleaner_timeout():
 
 	var ds = get_tree().get_nodes_in_group("decoration")
 	for dec in ds:
-		if dec is Area2D:
+		if dec is Sprite:
 			if dec.position.x <= edge:
 				generatedDecoration.erase(dec.name)
 				dec.queue_free()
