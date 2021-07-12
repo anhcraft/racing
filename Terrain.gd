@@ -100,7 +100,7 @@ func init():
 	terrainNoise = OpenSimplexNoise.new()
 	terrainNoise.seed = randi()
 	terrainNoise.octaves = 3
-	terrainNoise.period = 1000.0
+	terrainNoise.period = 1500.0
 	terrainNoise.persistence = 0.2
 
 	terrain_outer_x1 = get_viewport().size.x * 2
