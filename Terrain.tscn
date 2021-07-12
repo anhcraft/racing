@@ -57,8 +57,8 @@ physics_material_override = SubResource( 3 )
 
 [node name="Collision" type="CollisionPolygon2D" parent="StaticBody2D"]
 
-[node name="CoinCleaner" type="Timer" parent="."]
+[node name="Cleaner" type="Timer" parent="."]
 wait_time = 10.0
 autostart = true
 
-[connection signal="timeout" from="CoinCleaner" to="." method="_on_CoinCleaner_timeout"]
+[connection signal="timeout" from="Cleaner" to="." method="_on_Cleaner_timeout"]

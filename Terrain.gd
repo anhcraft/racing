@@ -57,19 +57,30 @@ export(Dictionary) var theme_config = {
 	"default": {
 		ground = "ground",
 		ground_scale = 2,
-		grass = true
+		grass = true,
+		decoration = null,
+		decoration_rate = 1,
+		decoration_scale = 1,
+		decoration_offset = 0
 	},
 	"desert": {
 		ground = "dune",
 		ground_scale = 0.1,
-		grass = false
+		grass = false,
+		decoration = "cactus",
+		decoration_rate = 0.2,
+		decoration_scale = 0.3,
+		decoration_offset = 30
 	}
 };
 
 const coinScene = preload("res://Coin.tscn")
 const specialCoinScene = preload("res://SpecialCoin.tscn")
+
 const groundTxt = preload("res://ground.png")
 const duneTxt = preload("res://dune.png")
+
+const cactusTxt = preload("res://cactus.png")
 
 var terrainNoise: OpenSimplexNoise;
 var grassNoise: OpenSimplexNoise;
@@ -80,6 +91,7 @@ var terrain_outer_x2: int;
 var terrain_outer_y: int;
 var current_terrain_config: int;
 var generatedCoins = {};
+var generatedDecoration = {};
 var coin_spawn_step = def_coin_spawn_step;
 
 func _ready():
@@ -118,21 +130,33 @@ func init():
 		if coin is Area2D:
 			coin.queue_free()
 
+	var ds = get_tree().get_nodes_in_group("decoration")
+	for dec in ds:
+		if dec is Area2D:
+			dec.queue_free()	
+
 func set_origin(pos: int, force: bool = false):
 	if !force && abs(pos - self.pos) < terrain_update_threshold:
 		return
 	self.pos = pos
 	update()
 
-func _on_CoinCleaner_timeout():
-	var coins = get_tree().get_nodes_in_group("coins")
+func _on_Cleaner_timeout():
 	var edge = pos - get_viewport().size.x * 2
-	var i = 0
+
+	var coins = get_tree().get_nodes_in_group("coins")
 	for coin in coins:
 		if coin is Area2D:
 			if coin.position.x <= edge:
 				generatedCoins.erase(coin.name)
 				coin.queue_free()
+
+	var ds = get_tree().get_nodes_in_group("decoration")
+	for dec in ds:
+		if dec is Area2D:
+			if dec.position.x <= edge:
+				generatedDecoration.erase(dec.name)
+				dec.queue_free()
 
 func get_terrain_config(x: int):
 	# To improve performance, we will cache the current terrain state
@@ -154,6 +178,11 @@ func getGroundTexture(n):
 	if n == "dune":
 		return duneTxt;
 	return groundTxt	
+
+func getDecorationTexture(n):
+	if n == "cactus":
+		return cactusTxt;
+	return null
 
 func _draw():
 	var themeConf = theme_config[$"/root/User".data.theme];
@@ -184,6 +213,21 @@ func _draw():
 			var g = (grassNoise.get_noise_1d(x) + 1) * 0.5
 			var d0 = grass_height_min + g * (grass_height_max - grass_height_min)
 			grassTopPoints.insert(0, Vector2(x, (0 if x < 0 else h - d) + d0))
+
+			if themeConf.decoration != null && x > 0:
+				var name = str(x);
+				if !generatedDecoration.has(name):
+					generatedDecoration[name] = true
+					if randf() <= themeConf.decoration_rate:
+						var node = Sprite.new()
+						add_child(node)
+						node.texture = getDecorationTexture(themeConf.decoration)
+						node.scale.x = themeConf.decoration_scale
+						node.scale.y = themeConf.decoration_scale
+						node.modulate = Color(1, 1, 1)
+						node.position.x = x
+						node.position.y = last_y - themeConf.decoration_offset
+						node.add_to_group("decoration")
 
 		if x % coin_spawn_step == 0:
 			var name = str(x);
