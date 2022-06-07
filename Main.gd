@@ -1,6 +1,6 @@
 extends Node2D
 
-export var camera_move_speed = 0.05 
+export var camera_move_speed = 0.07
 export(Dictionary) var skin_icons = {
 	"red": Color8(227, 90, 90),
 	"blue": Color8(68, 154, 235),
