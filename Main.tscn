@@ -116,9 +116,6 @@ margin_right = 40.0
 margin_bottom = 40.0
 rect_scale = Vector2( 0.6, 0.6 )
 texture_normal = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="BoostBtn" type="TextureButton" parent="HUD"]
 anchor_left = 0.05
