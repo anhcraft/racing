@@ -4,15 +4,15 @@ const owned_txt = preload("res://owned_btn.png")
 const buy_txt = preload("res://buy_btn.png")
 
 export(Dictionary) var items = {
-	rapid_rolling = 3000,
-	early_boost = 2000,
-	blue_skin = 8000,
-	pink_skin = 8000,
-	lime_skin = 8000,
-	resurrection = 20000,
-	resurrection2 = 50000,
+	rapid_rolling = 2000,
+	early_boost = 1000,
+	blue_skin = 5000,
+	pink_skin = 5000,
+	lime_skin = 5000,
+	resurrection = 10000,
+	resurrection2 = 25000,
 	more_coins = 5000,
-	more_coins2 = 30000,
+	more_coins2 = 20000,
 	night_sky = 10000
 };
 
