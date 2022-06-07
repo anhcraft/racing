@@ -5,10 +5,10 @@ signal overturn;
 
 export var car_speed = 200
 export var car_boost_cooldown = 1
-export var car_boost_speed = 50
-export var car_ultra_boost_speed = 200
-export var car_early_boost_speed = 200
-export var car_rapid_rolling_speed = 100
+export var car_boost_speed = 100
+export var car_ultra_boost_speed = 100
+export var car_early_boost_speed = 100
+export var car_rapid_rolling_speed = 70
 var total_car_speed = car_speed + car_boost_speed + car_ultra_boost_speed + car_early_boost_speed + car_rapid_rolling_speed
 
 const redSkin = preload("res://car_body.png")
