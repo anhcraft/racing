@@ -76,6 +76,16 @@ func _on_Car_overturn():
 	if $"/root/Player".deathCount >= max_deaths:
 		$DeathScreen/ContinueBtn.hide()
 
+func _input(event):
+	if event.is_action_pressed("car_go"):
+		goPressing = true
+	elif event.is_action_released("car_go") && goPressing:
+		goPressing = false
+		$Car/GoReleaseSound.play()
+
+	if event.is_action_released("car_boost"):
+		$Car.boost()
+
 func _process(delta):
 	if cameraVelocityX != 0:
 		var speed = camera_move_speed * delta * abs(cameraVelocityX) * Engine.get_frames_per_second()
@@ -119,8 +129,9 @@ func _on_PlayBtn_button_down():
 	$"/root/Player".stopped = false
 	$Car.mode = RigidBody2D.MODE_RIGID
 	$Car.on_car_start()
-	$HUD/GoBtn.show()
-	$HUD/BoostBtn.show()
+	if OS.has_feature("mobile"):
+		$HUD/GoBtn.show()
+		$HUD/BoostBtn.show()
 
 func _on_ContinueBtn_button_down():
 	var ds = $DeathScreen.get_children()
