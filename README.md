@@ -18,3 +18,6 @@ Sorry for my bad drawing skill :D
 1. Download the game in Releases page. 
 2. Extract the .zip file. 
 3. Run the .exe file.
+
+### Copyright
+Some of the assets were made by me. While the remanining belong to other authors (They are all free to redistribute)
